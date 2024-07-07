@@ -41,4 +41,12 @@
 }
 .large-icon {
     font-size: 40px;
-  }
+}
+.card_green {
+    background-color: #217C61;
+    color: whitesmoke;
+    margin-bottom: 20px;
+    padding: 10px 250px 10px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}

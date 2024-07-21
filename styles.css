@@ -63,10 +63,24 @@
 
 .truncate {
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Número de líneas */
+  -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.btnrecursos {
+  background-color: #217C61;
+  color: whitesmoke;
+  border: none;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block; 
+}
+
+.btnrecursos:hover {
+  background-color: #217C61;
+  color: whitesmoke;
 }
 
 --------------------------------------Galeria-------------------------------------

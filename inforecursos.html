@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <title>Recursos</title>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="row align-items-center content">
+        <div class="col-lg-10">
+            <h2 class="card-title">Lorem ipsum</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipiscing elit tempus cubilia nunc himenaeos vivamus, vehicula sed pretium scelerisque faucibus at ridiculus montes litora mi. Integer turpis consequat placerat fringilla euismod at primis convallis tempor gravida nisl commodo cubilia, tincidunt magna in orci taciti luctus pulvinar neque dis varius lacinia dictum nascetur, parturient sagittis magnis laoreet nisi massa interdum eget nullam odio leo sodales. Hac laoreet eleifend convallis cubilia praesent condimentum, suscipit fusce varius facilisi nascetur dictum, consequat lacinia diam commodo lobortis. Sapien mollis gravida penatibus praesent ac primis, inceptos neque nascetur hendrerit egestas, varius volutpat feugiat duis eros. Ad nulla platea himenaeos egestas dapibus morbi, nec blandit penatibus quisque dictum ut torquent, rutrum ullamcorper lacinia habitasse vehicula. Feugiat lacinia sapien interdum himenaeos massa, eu nullam commodo porta ut enim, lectus aenean convallis quisque.
+
+                Praesent dui penatibus in ac arcu tincidunt eget dictum malesuada ultrices, porta nullam nulla phasellus aliquam lobortis fringilla curae ornare. Suscipit cras tellus aliquam facilisis per ut orci, accumsan lobortis himenaeos mauris morbi posuere, suspendisse dignissim fames elementum nullam quam.
+                
+                Morbi laoreet senectus blandit semper pretium porta platea, primis non odio metus integer tempor aliquet ac, facilisis ullamcorper vestibulum ornare habitasse commodo. Velit sociosqu odio semper fringilla gravida molestie netus dui integer purus, fermentum tellus cum hac pharetra in sed suspendisse donec. Taciti mattis ultrices condimentum tempus eleifend nibh quis dis scelerisque proin posuere, consequat vitae sodales sociis interdum platea fusce viverra tincidunt est, porttitor vivamus lectus in ornare laoreet ad bibendum purus tempor.
+                
+                Tincidunt sagittis potenti urna facilisis bibendum nunc nibh porttitor feugiat augue vehicula iaculis, libero scelerisque mauris class tristique dignissim dapibus mi magnis nec dictumst. Inceptos vivamus leo purus curabitur porta justo neque, est interdum elementum tempor pellentesque feugiat mi, id morbi velit potenti ante malesuada. Commodo mollis per tempor leo mi nisl velit dapibus neque, porta hendrerit duis iaculis primis donec sodales augue, ad placerat risus sollicitudin himenaeos a non imperdiet. Etiam cum sapien eros nullam posuere semper eleifend cras nisi, natoque montes est faucibus curae dis lectus tristique torquent, vivamus purus ut conubia justo litora morbi dui.
+            </p>
+            <a href="recursos.html" class="btnrecursos"> Regresar</a>
+        </div>
+        <div class="col-lg-2">
+            <img src="https://via.placeholder.com/160" alt="Placeholder Image" class="img-fluid">
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Error al cargar el navbar:', error));
+    });
+</script>
+</html>

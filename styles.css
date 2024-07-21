@@ -41,6 +41,7 @@
 }
 .large-icon {
     font-size: 40px;
+    color: white; 
 }
 .card_green {
     background-color: #217C61;
@@ -49,6 +50,15 @@
     padding: 10px 250px 10px 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
+}
+
+.expertscard {
+  background-color: #217C61;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: whitesmoke;
 }
 
 --------------------------------------Galeria-------------------------------------

@@ -9,39 +9,95 @@
     <title>Menu Principal</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand py-3" href="index.html"><strong>Vida Azul</strong></a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="recursos.html"><strong>Recursos</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="expertos.html"><strong>Expertos</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="transportes.html"><strong>Transportes</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="galeria.html"><strong>Galería</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="eventos.html"><strong>Eventos</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="proyectos.html"><strong>Proyectos</strong></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="opiniones.html"><strong>Opiniones</strong></a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <input type="text" class="form-control search-bar" placeholder="Buscar...">
-                    <span class="nav-icon"><i class="bi bi-person-circle"></i></span>
+    <div id="navbar-placeholder"></div>
+    
+    <section id="inicio">
+        <div class="jumbotron-fluid text-center img_inicio" style=" background-image: url('https://static.vecteezy.com/system/resources/previews/010/970/477/non_2x/nature-of-green-leaf-environment-ecology-greenery-wallpaper-free-photo.jpg');
+             background-size: auto;
+             color:#02020a;
+             background-size: 100% 100%;
+             padding: 58px 0;
+             font-weight: bold;
+            ">
+            <div class="container">
+                <h1 class="display-4" style="color: #112A26; font-size: 6rem; font-weight: bold;"><strong>Vida Azul</strong></h1>
+                <p class="lead" style="color: #112A26; font-size: 1.5rem; font-weight: bold;"><strong>Conecta, Aprende, Actúa</strong></p>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="container container-fluid p-0">
+        <div class="container mt-5">
+            <h2>Eventos</h2>
+            <h5>Visualiza los eventos de tu interés e inscríbete!.</h5>
+            <br>
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="gallery">
+                        <a>
+                            <img src="a_Images/359823697_644929064334975_7103718428630239311_n.jpg" alt="Cinque Terre"
+                                class="img-fluid">
+                        </a>
+                        <div class="desc">Add a description of the image here</div>
+                        <div class="center-btn">
+                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="gallery">
+                        <a>
+                            <img src="a_Images/LIPIC2017062.jpg" alt="Forest" class="img-fluid">
+                        </a>
+                        <div class="desc">Add a description of the image here</div>
+                        <div class="center-btn">
+                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="gallery">
+                        <a>
+                            <img src="a_Images/DSCN0944.jpg" alt="Northern Lights" class="img-fluid">
+                        </a>
+                        <div class="desc">Add a description of the image here</div>
+                        <div class="center-btn">
+                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="gallery">
+                        <a>
+                            <img src="a_Images/la-poma.jpg" alt="Cinque Terre" class="img-fluid">
+                        </a>
+                        <div class="desc">Add a description of the image here</div>
+                        <div class="center-btn">
+                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
+
+    <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;" class="col text-center text-white mt-auto p-1">
+        <div class="container ">
+            <div class="col">
+                <p style="color: white;">&COPY;Vida Azul Derechos Reservados 2024</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error al cargar el navbar:', error));
+        });
+    </script>
 </body>
 </html>

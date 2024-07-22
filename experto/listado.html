@@ -14,21 +14,23 @@
 <body>
     <div id="navbar-placeholder"></div>
 
-
     <main class="flex-shrink-0">
         <div class="container">
-            <h3 class="my-3" id="titulo">Recursos</h3>
+            <h3 class="my-3" id="titulo">Experto</h3>
 
             <a href="nuevo.html" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
 
             <table class="table table-hover table-bordered my-3" aria-describedby="titulo">
                 <thead style="background-color: #112A26; color: white;">
                     <tr>
-                        <th scope="col">ID Recurso</th>
-                        <th scope="col">Nombre Recurso</th>
-                        <th scope="col">Categoría</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Imagen</th>
+                        <th scope="col">ID Experto</th>
+                        <th scope="col">Nombre Experto</th>
+                        <th scope="col">Quienes Somos</th>
+                        <th scope="col">Historia</th>
+                        <th scope="col">Instagram</th>
+                        <th scope="col">X</th>
+                        <th scope="col">YouTube</th>
+                        <th scope="col">Facebook</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -36,10 +38,13 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>Botellas</td>
-                        <td>Reciclaje</td>
-                        <td>Botellas para reciclar</td>
-                        <td>http://example.com/imagen.jpg</td>
+                        <td>Experto A</td>
+                        <td>Descripción sobre quiénes somos</td>
+                        <td>Historia del experto</td>
+                        <td><a href="http://instagram.com/expertoa" target="_blank">Instagram</a></td>
+                        <td><a href="http://x.com/expertoa" target="_blank">X</a></td>
+                        <td><a href="http://youtube.com/expertoa" target="_blank">YouTube</a></td>
+                        <td><a href="http://facebook.com/expertoa" target="_blank">Facebook</a></td>
                         <td>
                             <a href="edita.html" class="btn btn-sm me-2"
                                 style="background-color: #94C132; color: white;">Editar</a>
@@ -106,7 +111,6 @@
             })
         }
     </script>
-
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -118,7 +122,6 @@
                 .catch(error => console.error('Error al cargar el navbar:', error));
         });
     </script>
-
 </body>
 
 </html>

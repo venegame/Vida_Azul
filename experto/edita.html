@@ -17,42 +17,53 @@
     <!-- Begin page content -->
     <main class="flex-shrink-0">
         <div class="container">
-            <h3 class="my-3">Editar evento</h3>
+            <h3 class="my-3">Editar experto</h3>
 
             <form action="#" class="row g-3" method="post" autocomplete="off">
 
                 <div class="col-md-4">
-                    <label for="id_evento" class="form-label">ID Evento</label>
-                    <input type="text" class="form-control" id="id_evento" name="id_evento" required autofocus>
+                    <label for="id_experto" class="form-label">ID Experto</label>
+                    <input type="text" class="form-control" id="id_experto" name="id_experto" required autofocus>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="nombre_evento" class="form-label">Nombre Evento</label>
-                    <input type="text" class="form-control" id="nombre_evento" name="nombre_evento" required>
-                </div>
-
-                <div class="col-md-4">
-                    <label for="descripcion" class="form-label">Descripción</label>
-                    <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                    <label for="nombre_experto" class="form-label">Nombre Experto</label>
+                    <input type="text" class="form-control" id="nombre_experto" name="nombre_experto" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="imagen" class="form-label">Imagen URL</label>
-                    <input type="text" class="form-control" id="imagen" name="imagen">
+                    <label for="quienes_somos" class="form-label">¿Quiénes Somos?</label>
+                    <textarea class="form-control" id="quienes_somos" name="quienes_somos" rows="3" required></textarea>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="fecha_evento" class="form-label">Fecha Evento</label>
-                    <input type="date" class="form-control" id="fecha_evento" name="fecha_evento" required>
+                    <label for="historia_expertos" class="form-label">Historia</label>
+                    <textarea class="form-control" id="historia_expertos" name="historia_expertos" rows="3"
+                        required></textarea>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="id_categoria" class="form-label">Categoría</label>
-                    <input type="text" class="form-control" id="id_categoria" name="id_categoria" required>
+                <div class="col-md-3">
+                    <label for="url_instagram" class="form-label">Instagram</label>
+                    <input type="url" class="form-control" id="url_instagram" name="url_instagram">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="url_x" class="form-label">X (antes Twitter)</label>
+                    <input type="url" class="form-control" id="url_x" name="url_x">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="url_youtube" class="form-label">YouTube</label>
+                    <input type="url" class="form-control" id="url_youtube" name="url_youtube">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="url_facebook" class="form-label">Facebook</label>
+                    <input type="url" class="form-control" id="url_facebook" name="url_facebook">
                 </div>
 
                 <div class="col-12">
-                    <a href="../evento/listado.html" class="btn btn-secondary">Regresar</a>
+                    <a href="../experto/listado.html" class="btn btn-secondary">Regresar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
 
@@ -76,7 +87,6 @@
 </body>
 
 <script>
-
     document.addEventListener("DOMContentLoaded", function () {
         fetch('../navbar_cruds.html')
             .then(response => response.text())

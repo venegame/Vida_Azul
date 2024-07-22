@@ -21,27 +21,30 @@
 
             <a href="nuevo.html" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
 
-            <table class="table table-hover table-bordered my-3"  aria-describedby="titulo">
-                <thead  style="background-color: #112A26; color: white;">
+            <table class="table table-hover table-bordered my-3" aria-describedby="titulo">
+                <thead style="background-color: #112A26; color: white;">
                     <tr>
-                        <th scope="col">Clave</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Departamento</th>
+                        <th scope="col">ID Proyecto</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Nombre Proyecto</th>
+                        <th scope="col">Detalle Proyecto</th>
+                        <th scope="col">Estado Proyecto</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td>12345</td>
+                        <td>123</td>
                         <td>JUAN PEREZ</td>
-                        <td>0123456789</td>
-                        <td>JUANPEREZ@DOMINIO.COM</td>
-                        <td>RECURSOS HUMANOS</td>
+                        <td>Tecnología</td>
+                        <td>Proyecto A</td>
+                        <td>Detalles del proyecto A</td>
+                        <td>En Progreso</td>
                         <td>
-                            <a href="edita.html" class="btn btn-sm me-2" style="background-color: #94C132; color: white;">Editar</a>
+                            <a href="edita.html" class="btn btn-sm me-2"
+                                style="background-color: #94C132; color: white;">Editar</a>
 
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#eliminaModal" data-bs-id="1">Eliminar</button>
@@ -54,7 +57,8 @@
     </main>
 
 
-    <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;" class="col text-center text-white mt-auto p-1">
+    <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
+        class="col text-center text-white mt-auto p-1">
         <div class="container ">
             <div class="col">
                 <p style="color: white;">&COPY;Vida Azul Derechos Reservados 2024</p>
@@ -105,17 +109,17 @@
         }
     </script>
 
-<script>
+    <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch('../navbar_cruds.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar-placeholder').innerHTML = data;
-            })
-            .catch(error => console.error('Error al cargar el navbar:', error));
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('../navbar_cruds.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error al cargar el navbar:', error));
+        });
+    </script>
 
 </body>
 

@@ -20,43 +20,30 @@
             <h3 class="my-3">Editar publicación</h3>
 
             <form action="#" class="row g-3" method="post" autocomplete="off">
+                    <div class="col-md-4">
+                        <label for="id_imagen" class="form-label">ID Imagen</label>
+                        <input type="text" class="form-control" id="id_imagen" name="id_imagen" required autofocus>
+                    </div>
 
-                <div class="col-md-4">
-                    <label for="clave" class="form-label">Identificacion</label>
-                    <input type="text" class="form-control" id="clave" name="clave" required autofocus>
-                </div>
+                    <div class="col-md-4">
+                        <label for="id_usuario" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="id_usuario" name="id_usuario" required>
+                    </div>
 
-                <div class="col-md-8">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required>
-                </div>
+                    <div class="col-md-4">
+                        <label for="titulo_imagen" class="form-label">Título Imagen</label>
+                        <input type="text" class="form-control" id="titulo_imagen" name="titulo_imagen" required>
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
-                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                </div>
+                    <div class="col-md-4">
+                        <label for="imagen_url" class="form-label">Imagen URL</label>
+                        <input type="text" class="form-control" id="imagen_url" name="imagen_url" required>
+                    </div>
 
-                <div class="col-md-6">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="telefono" class="form-control" id="telefono" name="telefono" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="correo_electronico" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="correo_electronico" name="correo_electronico">
-                </div>
-
-                <div class="col-md-6">
-                    <label for="rol" class="form-label">Rol</label>
-                    <select class="form-select" id="rol" name="rol" required>
-                        <option value="">Seleccionar</option>
-                    </select>
-                </div>
-
-                <div class="col-12">
-                    <a href="../galeria/listado.html" class="btn btn-secondary">Regresar</a>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
+                    <div class="col-12">
+                        <a href="../galeria/listado.html" class="btn btn-secondary">Regresar</a>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
 
             </form>
 

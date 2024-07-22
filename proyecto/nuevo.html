@@ -22,37 +22,34 @@
             <form action="#" class="row g-3" method="post" autocomplete="off">
 
                 <div class="col-md-4">
-                    <label for="clave" class="form-label">Clave</label>
-                    <input type="text" class="form-control" id="clave" name="clave" required autofocus>
+                    <label for="id_proyecto" class="form-label">ID Proyecto</label>
+                    <input type="text" class="form-control" id="id_proyecto" name="id_proyecto" required autofocus>
                 </div>
 
-                <div class="col-md-8">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <div class="col-md-4">
+                    <label for="id_usuario" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="id_usuario" name="id_usuario" required>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
-                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="telefono" class="form-control" id="telefono" name="telefono" required>
+                <div class="col-md-4">
+                    <label for="id_categoria" class="form-label">Categoría</label>
+                    <input type="text" class="form-control" id="id_categoria" name="id_categoria" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="correo_electronico" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="correo_electronico" name="correo_electronico">
+                    <label for="nombre_proyecto" class="form-label">Nombre Proyecto</label>
+                    <input type="text" class="form-control" id="nombre_proyecto" name="nombre_proyecto" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label for="departamento" class="form-label">Departamento</label>
-                    <select class="form-select" id="departamento" name="departamento" required>
-                        <option value="">Seleccionar</option>
-                    </select>
+                    <label for="detalle_proyecto" class="form-label">Detalle Proyecto</label>
+                    <input type="text" class="form-control" id="detalle_proyecto" name="detalle_proyecto" required>
                 </div>
 
+                <div class="col-md-6">
+                    <label for="estado_proyecto" class="form-label">Estado Proyecto</label>
+                    <input type="text" class="form-control" id="estado_proyecto" name="estado_proyecto" required>
+                </div>
                 <div class="col-12">
                     <a href="../proyecto/listado.html" class="btn btn-secondary">Regresar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>

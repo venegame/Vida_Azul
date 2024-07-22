@@ -1,38 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <title>Opiniones - Vida Azul</title>
 </head>
+
 <body>
     <!-- Aquí se mostrarán el Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand py-3" href="index.html"><strong>Vida Azul</strong></a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="recursos.html"><strong>Recursos</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="expertos.html"><strong>Expertos</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="transportes.html"><strong>Transportes</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="galeria.html"><strong>Galería</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="eventos.html"><strong>Eventos</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="proyectos.html"><strong>Proyectos</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="opiniones.html"><strong>Opiniones</strong></a></li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <input type="text" class="form-control search-bar" placeholder="Buscar...">
-                    <span class="nav-icon"><i class="bi bi-person-circle"></i></span>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <div id="navbar-placeholder"></div>
 
     <div class="project-header">
-        <img src="https://images.pexels.com/photos/3264779/pexels-photo-3264779.jpeg" alt="Vida Azul" class="project-image">
+        <img src="https://images.pexels.com/photos/3264779/pexels-photo-3264779.jpeg" alt="Vida Azul"
+            class="project-image">
         <h2 class="centered">Opiniones</h2>
     </div>
 
@@ -71,7 +56,7 @@
             const commentInput = document.getElementById('comment');
             // Obtiene la sección donde se mostrarán los comentarios por su ID
             const commentsSection = document.getElementById('commentsSection');
-    
+
             // Agrega un evento al formulario para manejar el envío
             commentForm.addEventListener('submit', (e) => {
                 // Previene el comportamiento predeterminado del formulario (recargar la página)
@@ -90,31 +75,31 @@
                     commentInput.value = '';
                 }
             });
-    
+
             // Función para agregar un nuevo comentario
             function addComment(name, text, date) {
                 // Crea un nuevo div para la tarjeta del comentario
                 const commentCard = document.createElement('div');
                 // Agrega la clase 'comment-card' al div
                 commentCard.classList.add('comment-card');
-    
+
                 // Crea un nuevo div para el encabezado del comentario
                 const commentHeader = document.createElement('div');
                 // Agrega la clase 'comment-header' al div
                 commentHeader.classList.add('comment-header');
-    
+
                 // Crea un elemento 'strong' para el autor del comentario
                 const commentAuthor = document.createElement('strong');
                 // Establece el contenido de texto del autor con el nombre y la fecha
                 commentAuthor.textContent = `${name} - ${date}`;
-    
+
                 // Crea un nuevo párrafo para el texto del comentario
                 const commentText = document.createElement('p');
                 // Agrega la clase 'comment-text' al párrafo
                 commentText.classList.add('comment-text');
                 // Establece el contenido de texto del párrafo con el comentario
                 commentText.textContent = text;
-    
+
                 // Crea un nuevo div para las acciones del comentario (editar/eliminar)
                 const commentActions = document.createElement('div');
                 // Agrega la clase 'comment-actions' al div
@@ -124,7 +109,7 @@
                     <i class="bi bi-pencil-square edit-icon"></i>
                     <i class="bi bi-trash delete-icon"></i>
                 `;
-    
+
                 // Añade el autor y las acciones al encabezado del comentario
                 commentHeader.appendChild(commentAuthor);
                 commentHeader.appendChild(commentActions);
@@ -133,18 +118,18 @@
                 commentCard.appendChild(commentText);
                 // Añade la tarjeta del comentario a la sección de comentarios
                 commentsSection.appendChild(commentCard);
-    
+
                 // Selecciona el ícono de edición y le agrega un evento de clic para editar el comentario
                 const editIcon = commentActions.querySelector('.edit-icon');
                 // Selecciona el ícono de eliminación y le agrega un evento de clic para eliminar el comentario
                 const deleteIcon = commentActions.querySelector('.delete-icon');
-    
+
                 // Evento para editar el comentario
                 editIcon.addEventListener('click', () => editComment(commentCard, commentText));
                 // Evento para eliminar el comentario
                 deleteIcon.addEventListener('click', () => deleteComment(commentCard));
             }
-    
+
             // Función para editar un comentario
             function editComment(card, textElement) {
                 // Solicita al usuario que edite su comentario
@@ -154,7 +139,7 @@
                     textElement.textContent = newText.trim();
                 }
             }
-    
+
             // Función para eliminar un comentario
             function deleteComment(card) {
                 // Confirma si el usuario quiere eliminar el comentario
@@ -165,5 +150,17 @@
             }
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error al cargar el navbar:', error));
+        });
+    </script>
 </body>
+
 </html>

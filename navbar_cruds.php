@@ -4,36 +4,36 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="../recurso/listado.html"><strong>Recursos</strong></a>
+                    <a class="nav-link" href="../recurso/listado.php"><strong>Recursos</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../categoria/listado.html"><strong>Categorias</strong></a>
+                    <a class="nav-link" href="../categoria/listado.php"><strong>Categorias</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../transporte/listado.html"><strong>Transportes</strong></a>
+                    <a class="nav-link" href="../transporte/listado.php"><strong>Transportes</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../galeria/listado.html"><strong>Galería</strong></a>
+                    <a class="nav-link" href="../galeria/listado.php"><strong>Galería</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../evento/listado.html"><strong>Eventos</strong></a>
+                    <a class="nav-link" href="../evento/listado.php"><strong>Eventos</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../proyecto/listado.html"><strong>Proyectos</strong></a>
+                    <a class="nav-link" href="../proyecto/listado.php"><strong>Proyectos</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../rol/listado.html"><strong>Roles</strong></a>
+                    <a class="nav-link" href="../rol/listado.php"><strong>Roles</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../experto/listado.html"><strong>Expertos</strong></a>
+                    <a class="nav-link" href="../experto/listado.php"><strong>Expertos</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../usuario/listado.html"><strong>Usuarios</strong></a>
+                    <a class="nav-link" href="../usuario/listado.php"><strong>Usuarios</strong></a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
                 <input type="text" class="form-control search-bar" placeholder="Buscar">
-                <a href="/iniciarsesion.html" class="nav-icon"><i class="bi bi-person-circle"></i></a>
+                <a href="/iniciarsesion.php" class="nav-icon"><i class="bi bi-person-circle"></i></a>
             </div>
         </div>
     </div>

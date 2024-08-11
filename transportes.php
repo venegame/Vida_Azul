@@ -10,69 +10,60 @@
 </head>
 <body>
     <div id="navbar-placeholder"></div>
-    </nav>
     <div class="content">
         <h1>Transportes</h1>
         <br>
             <div class="content">
+                <?php
+                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                    if ($conexion->connect_error) {
+                        die("Conexión fallida: " . $conexion->connect_error);
+                    }
+                    $sql = "SELECT id_transporte, id_usuario, nombre_transporte, ruta_transporte, horario_transporte, precio_transporte FROM transportes";
+                    $stmt = $conexion->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $id = $row['id_transporte'];
+                            $id_usuario = $row['id_usuario'];
+                            $nombre_transporte = $row['nombre_transporte'];
+                            $ruta_transporte = $row['ruta_transporte'];
+                            $horario_transporte = $row['horario_transporte'];
+                            $precio_transporte = $row['precio_transporte'];
+                ?>
                 <div class="card_green d-flex">
                     <div class="card-body">
                         <div class="container content">
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <h4 class="card-title" style="color: #336B05;">Zona:</h4>
-                                    <p class="card-text">San Jose</p>
+                                    <p class="card-text"><?php echo $ruta_transporte; ?></p>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <h4 class="card-title" style="color: #336B05;">Horarios:</h4>
-                                    <p class="card-text">4:00 AM</p>
-                                    <p class="card-text">4:15 AM</p>
-                                    <p class="card-text">4:30 AM</p>
+                                    <p class="card-text"><?php echo nl2br(htmlspecialchars($horario_transporte)); ?></p>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <h4 class="card-title" style="color: #336B05;">Costo:</h4>
-                                    <p class="card-text">₡1600</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <h4 class="card-title" style="color: #336B05;">Servicios Adicionales:</h4>
-                                    <p class="card-text">* Servicios Sanitarios</p>
-                                    <p class="card-text">* Aire acondicionado</p>
+                                    <p class="card-text"><?php echo nl2br(htmlspecialchars($precio_transporte)); ?></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card_green d-flex">
-                    <div class="card-body">
-                        <div class="container content">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <h4 class="card-title" style="color: #336B05;">Zona:</h4>
-                                    <p class="card-text">Heredia</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <h4 class="card-title" style="color: #336B05;">Horarios:</h4>
-                                    <p class="card-text">5:00 AM</p>
-                                    <p class="card-text">5:15 AM</p>
-                                    <p class="card-text">5:30 AM</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <h4 class="card-title" style="color: #336B05;">Costo:</h4>
-                                    <p class="card-text">₡1200</p>
-                                </div>
-                                <div class="col-lg-3">
-                                    <h4 class="card-title" style="color: #336B05;">Servicios Adicionales:</h4>
-                                    <p class="card-text">* Servicios Sanitarios</p>
-                                    <p class="card-text">* WIFI</p>
-                                    <p class="card-text">* Aire acondicionado</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                        }
+                    } else {
+                        echo "No se encontraron transportes, por favor intente nuevamente.";
+                    }
+                    $stmt->close();
+                    $conexion->close();
+                ?>
             </div>
     </div>
     <br>
+    <div class="p-4"> </div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
         <div class="container ">

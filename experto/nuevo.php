@@ -50,7 +50,7 @@
                     <input type="url" class="form-control" id="url_facebook" name="url_facebook">
                 </div>
                 <div class="col-12">
-                    <a href="../experto/listado.html" class="btn btn-secondary">Regresar</a>
+                    <a href="../experto/listado.php" class="btn btn-secondary">Regresar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>

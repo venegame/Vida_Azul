@@ -58,7 +58,7 @@
                             });
                           </script>";
                 } else {
-                    echo "Error actualizando registro: " . $stmt->error;
+                    echo "Error ingresando registro: " . $stmt->error;
                 }
                 $stmt->close();
                 $conexion->close();

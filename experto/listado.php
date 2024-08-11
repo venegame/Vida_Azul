@@ -13,53 +13,66 @@
 
 <body>
     <div id="navbar-placeholder"></div>
-
     <main class="flex-shrink-0">
         <div class="container">
-            <h3 class="my-3" id="titulo">Experto</h3>
-
-            <a href="nuevo.html" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
-
+            <h3 class="my-3" id="titulo">Expertos</h3>
+            <a href="nuevo.php" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
             <table class="table table-hover table-bordered my-3" aria-describedby="titulo">
                 <thead style="background-color: #112A26; color: white;">
                     <tr>
                         <th scope="col">ID Experto</th>
+                        <th scope="col">Categoria</th>
                         <th scope="col">Nombre Experto</th>
                         <th scope="col">Quienes Somos</th>
                         <th scope="col">Historia</th>
-                        <th scope="col">Instagram</th>
-                        <th scope="col">X</th>
-                        <th scope="col">YouTube</th>
-                        <th scope="col">Facebook</th>
+                        <th scope="col">Links</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
-
+                <?php
+                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                    if ($conexion->connect_error) {
+                        die("Conexión fallida: " . $conexion->connect_error);
+                    }
+                    $sql = "SELECT id_experto, categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
+                    $result = $conexion->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $id = $row['id_experto'];
+                            $categoria = $row['categoria'];
+                            $nombre = $row['nombre_experto'];
+                            $quienes_somos = $row['quienes_somos'];
+                            $historia_expertos = $row['historia_expertos'];
+                            $url_instagram = $row['url_instagram'];
+                            $url_x = $row['url_x'];
+                            $url_youtube = $row['url_youtube'];
+                            $url_facebook = $row['url_facebook'];
+                ?>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>Experto A</td>
-                        <td>Descripción sobre quiénes somos</td>
-                        <td>Historia del experto</td>
-                        <td><a href="http://instagram.com/expertoa" target="_blank">Instagram</a></td>
-                        <td><a href="http://x.com/expertoa" target="_blank">X</a></td>
-                        <td><a href="http://youtube.com/expertoa" target="_blank">YouTube</a></td>
-                        <td><a href="http://facebook.com/expertoa" target="_blank">Facebook</a></td>
-                        <td>
-                            <a href="edita.html" class="btn btn-sm me-2"
-                                style="background-color: #94C132; color: white;">Editar</a>
-
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#eliminaModal" data-bs-id="1">Eliminar</button>
+                        <td name="id"><?php echo $id; ?></td>
+                        <td name="categoria"><?php echo $categoria; ?></td>
+                        <td name="nombre"><?php echo $nombre; ?></td>
+                        <td name="quienes_somos"><?php echo $quienes_somos; ?></td>
+                        <td name="historia_expertos" ><?php echo $historia_expertos; ?></td>
+                        <td name="Links"><?php echo $url_instagram; ?> <br> <?php echo $url_x; ?> <br> <?php echo $url_youtube; ?> <br> <?php echo $url_facebook; ?></td>
+                        <td style="display: flex; align-items: center;">
+                            <a href="edita.php?id=<?php echo $id; ?>" class="btn btn-sm me-2"style="background-color: #94C132; color: white;">Editar</a>
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?php echo $id; ?>">Eliminar</button>
                         </td>
                     </tr>
-
                 </tbody>
+                <?php
+                        }
+                    } else {
+                        echo "No se encontraron expertos, por favor intente nuevamente.";
+                    }
+                    $conexion->close();
+                ?>
             </table>
         </div>
     </main>
-
-
+    <div class="p-4"> </div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
         <div class="container ">
@@ -68,7 +81,6 @@
             </div>
         </div>
     </footer>
-
     <div class="modal fade" id="eliminaModal" tabindex="-1" aria-labelledby="eliminaModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -80,48 +92,36 @@
                     <p>¿Desea eliminar este registro?</p>
                 </div>
                 <div class="modal-footer">
-                    <form id="form-elimina" action="" method="post">
-                        <input type="hidden" name="_method" value="delete">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <form id="form-elimina" action="elimina.php" method="post">
+                        <input type="hidden" name="id_experto" id="id_experto">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Confirmar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-
-    <script>
-
-        const eliminaModal = document.getElementById('eliminaModal')
-        if (eliminaModal) {
-            eliminaModal.addEventListener('show.bs.modal', event => {
-                // Button that triggered the modal
-                const button = event.relatedTarget
-                // Extract info from data-bs-* attributes
-                const id = button.getAttribute('data-bs-id')
-
-                // Update the modal's content.
-                const form = eliminaModal.querySelector('#form-elimina')
-                form.setAttribute('action', 'elimina.html?id=' + id)
-            })
-        }
-    </script>
-    <script>
-
+        <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../navbar_cruds.html')
+            fetch('../navbar_cruds.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;
                 })
                 .catch(error => console.error('Error al cargar el navbar:', error));
+            const eliminaModal = document.getElementById('eliminaModal');
+            if (eliminaModal) {
+                eliminaModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    const id = button.getAttribute('data-bs-id');
+                    const form = eliminaModal.querySelector('#form-elimina');
+                    form.querySelector('#id_experto').value = id;
+                });
+            }
         });
     </script>
 </body>
-
 </html>

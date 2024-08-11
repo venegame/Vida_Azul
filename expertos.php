@@ -15,8 +15,29 @@
     </div>
     <div class="container container-fluid p-0">
         <br>
+        <?php
+            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+            if ($conexion->connect_error) {
+                die("Conexión fallida: " . $conexion->connect_error);
+            }
+            $sql = "SELECT id_experto, categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    $id = $row['id_experto'];
+                    $categoria = $row['categoria'];
+                    $nombre_experto = $row['nombre_experto'];
+                    $quienes_somos = $row['quienes_somos'];
+                    $historia_expertos = $row['historia_expertos'];
+                    $url_instagram = $row['url_instagram'];
+                    $url_x = $row['url_x'];
+                    $url_youtube = $row['url_youtube'];
+                    $url_facebook = $row['url_facebook'];
+        ?>
         <div class="expertscard">
-            <h1 style="text-align: center;">Green Wolf</h1>
+            <h1 style="text-align: center;"><?php echo htmlspecialchars($nombre_experto); ?></h1>
             <br>
             <div>
                 <div class="container content">
@@ -24,59 +45,38 @@
                         <div class="col-lg-9">
                             <div>
                                 <h3 class="card-title">¿Quiénes Son?</h3>
-                                <p class="card-text">Green Wolf Costa Rica es un movimiento integral, inclusivo y sostenible, que busca la recuperación socio-ecosistémica de Costa Rica a través de la acción y alianzas intersectoriales.</p>
+                                <p><?php echo nl2br(htmlspecialchars($quienes_somos)); ?></p>
                                 <br>
                                 <h3 class="card-title">Historia</h3>
-                                <p class="card-text">Nacemos a partir de la preocupación de nuestro fundador, Ellian Villalobos, por la creciente contaminación de los ecosistemas costarricenses. Por esto, un 15 de diciembre de 2018 funda Green Wolf Costa Rica.</p>
+                                <p><?php echo nl2br(htmlspecialchars($historia_expertos)); ?></p>
                                 <br>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div>
                                 <h3 class="card-title">Puntos de Contacto</h3>
-                                <a href="https://www.instagram.com/greenwolfcr/" class="btn bi bi-instagram large-icon" target="_blank"></a>
-                                <a href="https://x.com/greenwolfcr?lang=en" class="btn bi bi-twitter-x large-icon" target="_blank"></a>
-                                <a href="https://www.youtube.com/channel/UC6NRa0FDOb3pEx7xmX5P9fQ" class="btn bi bi-youtube large-icon" target="_blank"></a>
-                                <a href="https://www.facebook.com/GreenWolfCR" class="btn bi bi-facebook large-icon" target="_blank"></a>
+                                <a href="<?php echo $url_instagram; ?>" class="btn bi bi-instagram large-icon" target="_blank"></a>
+                                <a href="<?php echo $url_x; ?>" class="btn bi bi-twitter-x large-icon" target="_blank"></a>
+                                <a href="<?php echo $url_youtube; ?>" class="btn bi bi-youtube large-icon" target="_blank"></a>
+                                <a href="<?php echo $url_facebook; ?>" class="btn bi bi-facebook large-icon" target="_blank"></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="expertscard">
-            <h1 style="text-align: center;">Lorem ipsum dolor sit amet</h1>
-            <br>
-            <div>
-                <div class="container content">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <div>
-                                <h3 class="card-title">Lorem ipsum dolor sit amet</h3>
-                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipiscing elit integer venenatis semper malesuada, id nisi curabitur himenaeos aliquam in magna cras laoreet</p>
-                                <br>
-                                <h3 class="card-title">Lorem ipsum dolor sit amet</h3>
-                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipiscing elit integer venenatis semper malesuada, id nisi curabitur himenaeos aliquam in magna cras laoreet</p>
-                                <br>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div>
-                                <h3 class="card-title">Puntos de Contacto</h3>
-                                <a href="" class="btn bi bi-instagram large-icon" target="_blank"></a>
-                                <a href="" class="btn bi bi-twitter-x large-icon" target="_blank"></a>
-                                <a href="" class="btn bi bi-youtube large-icon" target="_blank"></a>
-                                <a href="" class="btn bi bi-facebook large-icon" target="_blank"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+                }
+            } else {
+                echo "No se encontraron expertos, por favor intente nuevamente.";
+            }
+
+            $stmt->close();
+            $conexion->close();
+        ?> 
     </div>
     <br>
     <div class="p-4"> </div>
-
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
         <div class="container ">

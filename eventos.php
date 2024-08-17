@@ -24,7 +24,7 @@
                         </a>
                         <div class="desc">Add a description of the image here</div>
                         <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                            <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         </a>
                         <div class="desc">Add a description of the image here</div>
                         <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                            <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                         </a>
                         <div class="desc">Add a description of the image here</div>
                         <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                            <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         </a>
                         <div class="desc">Add a description of the image here</div>
                         <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                            <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                         </a>
                         <div class="desc">Add a description of the image here</div>
                         <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                            <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                         </a>
                         <div class="desc">Add a description of the image here</div>
                         <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                            <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         </a>
                         <div class="desc">Add a description of the image here</div>
                         <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
+                            <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar.html')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

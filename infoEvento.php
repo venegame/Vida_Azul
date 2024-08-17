@@ -103,7 +103,7 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar.html')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

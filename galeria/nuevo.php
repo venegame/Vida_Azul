@@ -42,12 +42,55 @@
                 </div>
 
                 <div class="col-12">
-                    <a href="../galeria/listado.html" class="btn btn-secondary">Regresar</a>
+                    <a href="../galeria/listado.php" class="btn btn-secondary">Regresar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
 
             </form>
 
+        </div>
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $id_imagen = $_POST['id_imagen'];
+                $id_usuario = $_POST['id_usuario'];
+                $titulo_imagen = $_POST['titulo_imagen'];
+                $imagen_url = $_POST['imagen_url'];
+                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                if ($conexion->connect_error) {
+                    die("Conexión fallida: " . $conexion->connect_error);
+                }
+                $sql = "INSERT INTO galeria (id_imagen, id_usuario, titulo_imagen, imagen_url) VALUES (?, ?, ?, ?)";
+                $stmt = $conexion->prepare($sql);
+                $stmt->bind_param("ssss", $id_imagen, $id_usuario, $titulo_imagen, $imagen_url);
+                if ($stmt->execute()) {
+                    echo "<script>
+                            window.addEventListener('load', function() {
+                                var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                                myModal.show();
+                            });
+                          </script>";
+                } else {
+                    echo "Error ingresando registro: " . $stmt->error;
+                }
+                $stmt->close();
+                $conexion->close();
+            }
+        ?>
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Operacion exitosa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        El registro fue agregado con éxito.
+                    </div>
+                    <div class="modal-footer">
+                        <a href="listado.php" class="btn btn-primary">Regresar</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -66,7 +109,7 @@
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../navbar_cruds.html')
+            fetch('../navbar_cruds.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

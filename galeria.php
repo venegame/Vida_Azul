@@ -80,6 +80,39 @@
                         <div class="desc">Add a description of the image here</div>
                     </div>
                 </div>
+                <?php
+                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                    if ($conexion->connect_error) {
+                        die("Conexión fallida: " . $conexion->connect_error);
+                    }
+                    $sql = "SELECT id_imagen, id_usuario, titulo_imagen, imagen_url FROM galeria";
+                    $stmt = $conexion->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $id_imagen = $row['id_imagen'];
+                            $id_usuario = $row['id_usuario'];
+                            $titulo_imagen = $row['titulo_imagen'];
+                            $imagen_url = $row['imagen_url'];
+                ?>
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4" data-user-id="<?php echo $id_usuario; ?>">
+                    <div class="gallery">
+                        <a target="_blank" href="<?php echo $imagen_url; ?>">
+                            <img src="<?php echo $imagen_url; ?>" alt="<?php echo $titulo_imagen; ?>" class="img-fluid">
+                        </a>
+                        <div class="desc"><?php echo $titulo_imagen; ?> (Usuario: <?php echo $id_usuario; ?>)</div>
+                    </div>
+                 </div>
+                 <?php
+                        }
+                    } else {
+                        echo "";
+                    }
+                    $stmt->close();
+                    $conexion->close();
+                ?>
+
             </div>
             <div class="clearfix"></div>
             <div style="padding:6px;">
@@ -98,7 +131,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar.html')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

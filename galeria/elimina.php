@@ -13,7 +13,39 @@
 
 <body class="d-flex flex-column h-100">
     <div id="navbar-placeholder"></div>
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if (isset($_GET['id'])) {
+                    $id_imagen = intval($_GET['id']);
 
+                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+
+                    if ($conexion->connect_error) {
+                        die("Conexión fallida: " . $conexion->connect_error);
+                    }
+
+                    $sql = "DELETE FROM galeria WHERE id_imagen = ?";
+                    $stmt = $conexion->prepare($sql);
+                    $stmt->bind_param("i", $id_imagen);
+
+                    if ($stmt->execute()) {
+                        // Redirigir antes de cerrar la conexión
+                        header("Location: listado.php");
+                        exit();
+                    } else {
+                        echo "Error al eliminar el registro: " . $conexion->error;
+                    }
+
+                    $stmt->close();
+                    $conexion->close();
+                } else {
+                    echo "ID no proporcionado";
+                }
+            } else {
+                echo "Método no permitido";
+            }
+    ?>
+    
     <!-- Begin page content -->
     <main class="flex-shrink-0">
         <div class="container">
@@ -25,7 +57,7 @@
 
             <div class="row">
                 <div class="col text-center">
-                    <a href="../galeria/listado.html" class="btn btn-secondary">Regresar</a>
+                    <a href="../galeria/listado.php" class="btn btn-secondary">Regresar</a>
                 </div>
             </div>
         </div>
@@ -45,7 +77,7 @@
         <script>
 
             document.addEventListener("DOMContentLoaded", function () {
-                fetch('../navbar_cruds.html')
+                fetch('../navbar_cruds.php')
                     .then(response => response.text())
                     .then(data => {
                         document.getElementById('navbar-placeholder').innerHTML = data;

@@ -18,7 +18,7 @@
         <div class="container">
             <h3 class="my-3" id="titulo">Galeria</h3>
 
-            <a href="nuevo.html" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
+            <a href="nuevo.php" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
 
             <table class="table table-hover table-bordered my-3" aria-describedby="titulo">
                 <thead style="background-color: #112A26; color: white;">
@@ -30,23 +30,44 @@
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
+                <?php
+                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                    if ($conexion->connect_error) {
+                        die("Conexión fallida: " . $conexion->connect_error);
+                    }
+                    $sql = "SELECT id_imagen, id_usuario, titulo_imagen, imagen_url FROM galeria";
+                    $result = $conexion->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $id_imagen = $row['id_imagen'];
+                            $id_usuario = $row['id_usuario'];
+                            $titulo_imagen = $row['titulo_imagen'];
+                            $imagen_url = $row['imagen_url'];
+                ?>
 
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>JUAN PEREZ</td>
-                        <td>Imagen A</td>
-                        <td>http://example.com/imagen.jpg</td>
+                        <td name="id_imagen"><?php echo $id_imagen; ?></td>
+                        <td name="id_usuario"><?php echo $id_usuario; ?></td>
+                        <td name="titulo_imagen"><?php echo $titulo_imagen; ?></td>
+                        <td name="imagen_url"><?php echo $imagen_url; ?></td>
                         <td>
-                            <a href="edita.html" class="btn btn-sm me-2"
+                            <a href="edita.php" class="btn btn-sm me-2"
                                 style="background-color: #94C132; color: white;">Editar</a>
 
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#eliminaModal" data-bs-id="1">Eliminar</button>
+                                data-bs-target="#eliminaModal" data-bs-id="<?php echo $id_imagen; ?>">Eliminar</button>
                         </td>
                     </tr>
 
                 </tbody>
+                <?php
+                        }
+                    } else {
+                        echo "No se encontraron imágenes, por favor ingrese alguna.";
+                    }
+                    $conexion->close();
+                ?>
             </table>
         </div>
     </main>
@@ -99,14 +120,14 @@
 
                 // Update the modal's content.
                 const form = eliminaModal.querySelector('#form-elimina')
-                form.setAttribute('action', 'elimina.html?id=' + id)
+                form.setAttribute('action', 'elimina.php?id=' + id)
             })
         }
     </script>
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../navbar_cruds.html')
+            fetch('../navbar_cruds.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

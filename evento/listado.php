@@ -18,7 +18,7 @@
         <div class="container">
             <h3 class="my-3" id="titulo">Eventos</h3>
 
-            <a href="nuevo.html" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
+            <a href="nuevo.php" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
 
             <table class="table table-hover table-bordered my-3" aria-describedby="titulo">
                 <thead style="background-color: #112A26; color: white;">
@@ -32,17 +32,33 @@
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
+                <?php
+                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                    if ($conexion->connect_error) {
+                        die("Conexión fallida: " . $conexion->connect_error);
+                    }
+                    $sql = "SELECT id_evento, nombre_evento, descripcion, imagen, fecha_evento, id_categoria FROM eventos";
+                    $result = $conexion->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            $id_evento = $row['id_evento'];
+                            $nombre_evento = $row['nombre_evento'];
+                            $descripcion = $row['descripcion'];
+                            $imagen = $row['imagen'];
+                            $fecha_evento = $row['fecha_evento'];
+                            $id_categoria = $row['id_categoria'];
+                ?>
 
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>Evento A</td>
-                        <td>2024-07-21</td>
-                        <td>Reciclaje</td>
-                        <td>Evento de Reciclaje</td>
-                        <td>http://example.com/imagen.jpg</td>
+                        <td name="id_evento"><?php echo $id_evento; ?></td>
+                        <td name="nombre_evento"><?php echo $nombre_evento; ?></td>
+                        <td name="descripcion"><?php echo $descripcion; ?></td>
+                        <td name="imagen"><?php echo $imagen; ?></td>
+                        <td name="fecha_evento"><?php echo $fecha_evento; ?></td>
+                        <td name="id_categoria"><?php echo $id_categoria; ?></td>
                         <td>
-                            <a href="edita.html" class="btn btn-sm me-2"
+                            <a href="edita.php" class="btn btn-sm me-2"
                                 style="background-color: #94C132; color: white;">Editar</a>
 
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
@@ -51,6 +67,13 @@
                     </tr>
 
                 </tbody>
+                <?php
+                        }
+                    } else {
+                        echo "No se encontraron eventos, por favor ingrese alguno.";
+                    }
+                    $conexion->close();
+                ?>
             </table>
         </div>
     </main>
@@ -103,14 +126,14 @@
 
                 // Update the modal's content.
                 const form = eliminaModal.querySelector('#form-elimina')
-                form.setAttribute('action', 'elimina.html?id=' + id)
+                form.setAttribute('action', 'elimina.php?id=' + id)
             })
         }
     </script>
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../navbar_cruds.html')
+            fetch('../navbar_cruds.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

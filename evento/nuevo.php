@@ -55,13 +55,61 @@
 
 
                 <div class="col-12">
-                    <a href="../evento/listado.html" class="btn btn-secondary">Regresar</a>
+                    <a href="../evento/listado.php" class="btn btn-secondary">Regresar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
 
             </form>
 
         </div>
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $id_evento = $_POST['id_evento'];
+                $nombre_evento = $_POST['nombre_evento'];
+                $descripcion = $_POST['descripcion'];
+                $imagen = $_POST['imagen'];
+                $fecha_evento = $_POST['fecha_evento'];
+                $id_categoria = $_POST['id_categoria'];
+                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                if ($conexion->connect_error) {
+                    die("Conexión fallida: " . $conexion->connect_error);
+                }
+                $sql = "INSERT INTO eventos (id_evento, nombre_evento, descripcion, imagen, fecha_evento, id_categoria) VALUES (?, ?, ?, ?, ?, ?)";
+                $stmt = $conexion->prepare($sql);
+                $stmt->bind_param("ssssss", $id_evento, $nombre_evento, $descripcion, $imagen, $fecha_evento, $id_categoria);
+                if ($stmt->execute()) {
+                    echo "<script>
+                            window.addEventListener('load', function() {
+                                var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                                myModal.show();
+                            });
+                          </script>";
+                } else {
+                    echo "Error ingresando registro: " . $stmt->error;
+                }
+                $stmt->close();
+                $conexion->close();
+            }
+        ?>
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Operacion exitosa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        El registro fue agregado con éxito.
+                    </div>
+                    <div class="modal-footer">
+                        <a href="listado.php" class="btn btn-primary">Regresar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </main>
 
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
@@ -80,7 +128,7 @@
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../navbar_cruds.html')
+            fetch('../navbar_cruds.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

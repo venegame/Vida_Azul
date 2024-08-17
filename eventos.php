@@ -106,7 +106,43 @@
                             <a href="infoEvento.php" class="btn btn-primary mt-2">Más información</a>
                         </div>
                     </div>
-                </div>
+                            <?php
+                            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                            if ($conexion->connect_error) {
+                                die("Conexión fallida: " . $conexion->connect_error);
+                            }
+                            $sql = "SELECT id_evento, nombre_evento, descripcion, imagen, fecha_evento, id_categoria FROM eventos";
+                            $stmt = $conexion->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    $id_evento = $row['id_evento'];
+                                    $nombre_evento = $row['nombre_evento'];
+                                    $descripcion = $row['descripcion'];
+                                    $imagen = $row['imagen'];
+                                    $fecha_evento = $row['fecha_evento'];
+                                    $id_categoria = $row['id_categoria'];
+                        ?>
+                        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <div class="gallery">
+                                <a>
+                                    <img src="<?php echo $imagen; ?>" alt="<?php echo $nombre_evento; ?>" class="img-fluid">
+                                </a>
+                                <div class="desc"><?php echo $descripcion; ?></div>
+                                <div class="center-btn">
+                                    <a href="infoEvento.php?id=<?php echo $id_evento; ?>" class="btn btn-primary mt-2">Más información</a>
+                                </div>
+                            </div>
+                     </div>
+                        <?php
+                                }
+                            } else {
+                                echo "";
+                            }
+                            $stmt->close();
+                            $conexion->close();
+                        ?>
             </div>
         </div>
     </div>

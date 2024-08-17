@@ -14,6 +14,39 @@
 <body class="d-flex flex-column h-100">
     <div id="navbar-placeholder"></div>
 
+    <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            var_dump($_POST);
+            $id_evento = $_POST['id_evento'];
+            $nombre_evento = $_POST['nombre_evento'];
+            $descripcion = $_POST['descripcion'];
+            $imagen = $_POST['imagen'];
+            $fecha_evento = $_POST['fecha_evento'];
+            $id_categoria = $_POST['id_categoria'];
+            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+
+            if ($conexion->connect_error) {
+                die("Conexión fallida: " . $conexion->connect_error);
+            }
+
+            $sql = "UPDATE eventos SET nombre_evento = ?, descripcion = ?, imagen = ?, fecha_evento = ?, id_categoria = ? WHERE id_evento = ?";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("ssssss", $nombre_evento, $descripcion, $imagen, $fecha_evento, $id_categoria, $id_evento);
+
+            if ($stmt->execute()) {
+                echo "Registro actualizado con éxito";
+                sleep(1);
+                header("Location: listado.php");
+                        exit();
+            } else {
+                echo "Error al actualizar el registro: " . $stmt->error;
+            }
+
+            $stmt->close();
+            $conexion->close();
+        }
+    ?>
+
     <!-- Begin page content -->
     <main class="flex-shrink-0">
         <div class="container">
@@ -52,7 +85,7 @@
                 </div>
 
                 <div class="col-12">
-                    <a href="../evento/listado.html" class="btn btn-secondary">Regresar</a>
+                    <a href="../evento/listado.php" class="btn btn-secondary">Regresar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
 
@@ -78,7 +111,7 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
-        fetch('../navbar_cruds.html')
+        fetch('../navbar_cruds.php')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('navbar-placeholder').innerHTML = data;

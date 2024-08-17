@@ -89,7 +89,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-danger">Confirmar</button>
                     </form>
-                </div>
+                </div>  
             </div>
         </div>
     </div>

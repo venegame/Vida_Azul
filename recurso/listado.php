@@ -31,23 +31,23 @@
                     if ($conexion->connect_error) {
                         die("Conexión fallida: " . $conexion->connect_error);
                     }
-                    $sql = "SELECT id_recurso, nombre_recurso, categoria, descripcion, imagen FROM recursos";
+                    $sql = "SELECT id_recurso, nombre_recurso, id_categoria, descripcion, imagen FROM recursos";
                     $result = $conexion->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             $id = $row['id_recurso'];
                             $nombre = $row['nombre_recurso'];
-                            $categoria = $row['categoria'];
+                            $id_categoria = $row['id_categoria'];
                             $descripcion = $row['descripcion'];
                             $imagen = $row['imagen'];
                 ?>
                 <tbody>
                     <tr>
-                        <td name="id"><?php echo $id; ?></td>
-                        <td name="nombre"><?php echo $nombre; ?></td>
-                        <td name="categoria"><?php echo $categoria; ?></td>
-                        <td name="descripcion"><?php echo $descripcion; ?></td>
-                        <td name="imagen"><?php echo $imagen; ?></td>
+                        <td name="id" class="truncate2"><?php echo $id; ?></td>
+                        <td name="nombre" class="truncate2"><?php echo $nombre; ?></td>
+                        <td name="id_categoria" class="truncate2"><?php echo $id_categoria; ?></td>
+                        <td name="descripcion" class="truncate2"><?php echo $descripcion; ?></td>
+                        <td name="imagen" class="truncate2"><?php echo $imagen; ?></td>
                         <td style="display: flex; align-items: center;">
                             <a href="edita.php?id=<?php echo $id; ?>" class="btn btn-sm me-2"style="background-color: #94C132; color: white;">Editar</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?php echo $id; ?>">Eliminar</button>

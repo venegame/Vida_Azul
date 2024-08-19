@@ -48,21 +48,18 @@
                             $fecha_evento = $row['fecha_evento'];
                             $id_categoria = $row['id_categoria'];
                 ?>
-
                 <tbody>
                     <tr>
-                        <td name="id_evento"><?php echo $id_evento; ?></td>
-                        <td name="nombre_evento"><?php echo $nombre_evento; ?></td>
-                        <td name="descripcion"><?php echo $descripcion; ?></td>
-                        <td name="imagen"><?php echo $imagen; ?></td>
-                        <td name="fecha_evento"><?php echo $fecha_evento; ?></td>
-                        <td name="id_categoria"><?php echo $id_categoria; ?></td>
+                        <td name="id_evento" class="truncateless"><?php echo $id_evento; ?></td>
+                        <td name="nombre_evento" class="truncateless"><?php echo $nombre_evento; ?></td>
+                        <td name="descripcion" class="truncateless"><?php echo $descripcion; ?></td>
+                        <td name="imagen" class="truncateless"><?php echo $imagen; ?></td>
+                        <td name="fecha_evento" class="truncateless"><?php echo $fecha_evento; ?></td>
+                        <td name="id_categoria" class="truncateless"><?php echo $id_categoria; ?></td>
                         <td>
-                            <a href="edita.php" class="btn btn-sm me-2"
+                            <a href="edita.php?id=<?php echo $id_evento; ?>" class="btn btn-sm me-2"
                                 style="background-color: #94C132; color: white;">Editar</a>
-
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#eliminaModal" data-bs-id="1">Eliminar</button>
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?php echo $id_evento; ?>">Eliminar</button>
                         </td>
                     </tr>
 
@@ -77,8 +74,7 @@
             </table>
         </div>
     </main>
-
-
+    <div class="p-4"> </div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
         <div class="container ">
@@ -87,7 +83,6 @@
             </div>
         </div>
     </footer>
-
     <div class="modal fade" id="eliminaModal" tabindex="-1" aria-labelledby="eliminaModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -99,39 +94,20 @@
                     <p>¿Desea eliminar este registro?</p>
                 </div>
                 <div class="modal-footer">
-                    <form id="form-elimina" action="" method="post">
-                        <input type="hidden" name="_method" value="delete">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <form id="form-elimina" action="elimina.php" method="post">
+                        <input type="hidden" name="id_evento" id="id_evento">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Confirmar</button>
                     </form>
-                </div>
+                </div>  
             </div>
         </div>
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-
-    <script>
-
-        const eliminaModal = document.getElementById('eliminaModal')
-        if (eliminaModal) {
-            eliminaModal.addEventListener('show.bs.modal', event => {
-                // Button that triggered the modal
-                const button = event.relatedTarget
-                // Extract info from data-bs-* attributes
-                const id = button.getAttribute('data-bs-id')
-
-                // Update the modal's content.
-                const form = eliminaModal.querySelector('#form-elimina')
-                form.setAttribute('action', 'elimina.php?id=' + id)
-            })
-        }
+        crossorigin="anonymous">
     </script>
     <script>
-
         document.addEventListener("DOMContentLoaded", function () {
             fetch('../navbar_cruds.php')
                 .then(response => response.text())
@@ -139,9 +115,16 @@
                     document.getElementById('navbar-placeholder').innerHTML = data;
                 })
                 .catch(error => console.error('Error al cargar el navbar:', error));
+            const eliminaModal = document.getElementById('eliminaModal');
+            if (eliminaModal) {
+                eliminaModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    const id = button.getAttribute('data-bs-id');
+                    const form = eliminaModal.querySelector('#form-elimina');
+                    form.querySelector('#id_evento').value = id;
+                });
+            }
         });
     </script>
-
 </body>
-
 </html>

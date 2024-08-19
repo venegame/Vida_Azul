@@ -13,14 +13,37 @@
 
 <body class="d-flex flex-column h-100">
     <div id="navbar-placeholder"></div>
-
+    <?php
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+            if ($conexion->connect_error) {
+                die("Conexión fallida: " . $conexion->connect_error);
+            }
+            $sql = "SELECT id_imagen, id_usuario, titulo, imagen FROM galeria WHERE id_imagen = ?";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $id_imagen = $row['id_imagen'];
+                $id_usuario = $row['id_usuario'];
+                $titulo = $row['titulo'];
+                $imagen = $row['imagen'];
+            }
+            $conexion->close();
+        } else {
+            echo "No se encontro el ID de la galeria.";
+        }
+    ?>
     <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             var_dump($_POST);
             $id_imagen = $_POST['id_imagen'];
             $id_usuario = $_POST['id_usuario'];
-            $titulo_imagen = $_POST['titulo_imagen'];
-            $imagen_url = $_POST['imagen_url'];
+            $titulo = $_POST['titulo'];
+            $imagen = $_POST['imagen'];
 
             $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
@@ -28,9 +51,9 @@
                 die("Conexión fallida: " . $conexion->connect_error);
             }
 
-            $sql = "UPDATE galeria SET id_usuario = ?, titulo_imagen = ?, imagen_url = ? WHERE id_imagen = ?";
+            $sql = "UPDATE galeria SET id_usuario = ?, titulo = ?, imagen = ? WHERE id_imagen = ?";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("sssi", $id_usuario, $titulo_imagen, $imagen_url, $id_imagen);
+            $stmt->bind_param("sssi", $id_usuario, $titulo, $imagen, $id_imagen);
 
             if ($stmt->execute()) {
                 echo "Registro actualizado con éxito";
@@ -52,10 +75,10 @@
         <div class="container">
             <h3 class="my-3">Editar publicación</h3>
 
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="row g-3" method="post" autocomplete="off">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="row g-3" method="post">
                     <div class="col-md-4">
                         <label for="id_imagen" class="form-label">ID Imagen</label>
-                        <input type="text" class="form-control" id="id_imagen" name="id_imagen" required autofocus value="<?php echo isset($id_imagen) ? $id_imagen : ''; ?>">
+                        <input type="text" class="form-control" id="id_imagen" name="id_imagen" required readonly value="<?php echo isset($id_imagen) ? $id_imagen : ''; ?>">
                     </div>
 
                     <div class="col-md-4">
@@ -64,13 +87,13 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label for="titulo_imagen" class="form-label">Título Imagen</label>
-                        <input type="text" class="form-control" id="titulo_imagen" name="titulo_imagen" required value="<?php echo isset($titulo_imagen) ? $titulo_imagen : ''; ?>">
+                        <label for="titulo" class="form-label">Título Imagen</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required value="<?php echo isset($titulo) ? $titulo : ''; ?>">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="imagen_url" class="form-label">Imagen URL</label>
-                        <input type="text" class="form-control" id="imagen_url" name="imagen_url" required value="<?php echo isset($imagen_url) ? $imagen_url : ''; ?>">
+                        <label for="imagen" class="form-label">Imagen URL</label>
+                        <input type="text" class="form-control" id="imagen" name="imagen" required value="<?php echo isset($imagen) ? $imagen : ''; ?>">
                     </div>
 
                     <div class="col-12">

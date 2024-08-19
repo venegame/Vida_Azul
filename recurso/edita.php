@@ -18,7 +18,7 @@
             if ($conexion->connect_error) {
                 die("Conexión fallida: " . $conexion->connect_error);
             }
-            $sql = "SELECT nombre_recurso, categoria, descripcion, imagen FROM recursos WHERE id_recurso = ?";
+            $sql = "SELECT nombre_recurso, id_categoria, descripcion, imagen FROM recursos WHERE id_recurso = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -26,7 +26,7 @@
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $nombre = $row['nombre_recurso'];
-                $categoria = $row['categoria'];
+                $id_categoria = $row['id_categoria'];
                 $descripcion = $row['descripcion'];
                 $imagen = $row['imagen'];
             }
@@ -47,9 +47,21 @@
                     <label for="nombre_recurso" class="form-label">Nombre Recurso</label>
                     <input type="text" class="form-control" id="nombre_recurso" name="nombre_recurso" value="<?php echo $nombre; ?>" required>
                 </div>
-                <div class="col-md-6">
-                    <label for="categoria" class="form-label">Categoría</label>
-                    <input type="text" class="form-control" id="categoria" name="categoria" value="<?php echo $categoria; ?>" required>
+                <div class="col-md-4">
+                    <label for="id_categoria" class="form-label">Categoría</label>
+                    <select class="form-select" id="id_categoria" name="id_categoria" required>
+                        <?php
+                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                        if ($conexion->connect_error) {
+                            die("Conexión fallida: " . $conexion->connect_error);
+                        }
+                        // Obtener las categorías de la base de datos
+                        $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['id_categoria']}'>{$row['nombre_categoria']}</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="descripcion" class="form-label">Descripción</label>
@@ -70,16 +82,12 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $id_recurso = $_POST['id_recurso'];
             $nombre_recurso = $_POST['nombre_recurso'];
-            $categoria = $_POST['categoria'];
+            $id_categoria = $_POST['id_categoria'];
             $descripcion = $_POST['descripcion'];
             $imagen = $_POST['imagen'];
-            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-            if ($conexion->connect_error) {
-                die("Conexión fallida: " . $conexion->connect_error);
-            }
-            $sql = "UPDATE recursos SET nombre_recurso = ?, categoria = ?, descripcion = ?, imagen = ? WHERE id_recurso = ?";
+            $sql = "UPDATE recursos SET nombre_recurso = ?, id_categoria = ?, descripcion = ?, imagen = ? WHERE id_recurso = ?";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("ssssi", $nombre_recurso, $categoria, $descripcion, $imagen, $id_recurso);
+            $stmt->bind_param("ssssi", $nombre_recurso, $id_categoria, $descripcion, $imagen, $id_recurso);
             if ($stmt->execute()) {
                 echo "<script>
                         window.addEventListener('load', function() {

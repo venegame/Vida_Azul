@@ -104,6 +104,20 @@
   display: block; /* Hace que la imagen se comporte como un bloque */
 }
 
+.truncate2 {
+  max-width: 350px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.truncateless {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 
 --------------------------------------Galeria-------------------------------------
 div.gallery {

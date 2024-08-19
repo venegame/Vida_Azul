@@ -48,11 +48,22 @@
                     <input type="date" class="form-control" id="fecha_evento" name="fecha_evento" required>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="id_categoria" class="form-label">Categoría</label>
-                    <input type="text" class="form-control" id="id_categoria" name="id_categoria" required>
+                    <select class="form-select" id="id_categoria" name="id_categoria" required>
+                        <?php
+                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                        if ($conexion->connect_error) {
+                            die("Conexión fallida: " . $conexion->connect_error);
+                        }
+                        // Obtener las categorías de la base de datos
+                        $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['id_categoria']}'>{$row['nombre_categoria']}</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
-
 
                 <div class="col-12">
                     <a href="../evento/listado.php" class="btn btn-secondary">Regresar</a>

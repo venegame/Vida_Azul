@@ -1,3 +1,62 @@
+<?php
+session_start();
+
+// Variables para mensajes
+$mensaje = '';
+$tipo_mensaje = '';
+
+// Crear conexión
+$conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul", "3307");
+
+// Verificar conexión
+if ($conexion->connect_error) {
+    die("Error de conexión: " . $conexion->connect_error);
+}
+
+// Verificar si el formulario fue enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los valores del formulario
+    $correo = $_POST['username'];
+    $contrasenia = $_POST['password'];
+
+    // Preparar la consulta para verificar el usuario
+    $sql = "SELECT id_usuario, nombre_usuario, id_rol FROM usuario WHERE correo = ? AND contrasenia = ?";
+    
+    if ($stmt = $conexion->prepare($sql)) {
+        $stmt->bind_param("ss", $correo, $contrasenia);
+        $stmt->execute();
+        $stmt->store_result();
+        
+        if ($stmt->num_rows > 0) {
+            // El usuario existe, obtener detalles
+            $stmt->bind_result($id_usuario, $nombre_usuario, $id_rol);
+            $stmt->fetch();
+
+            // Guardar detalles en la sesión
+            $_SESSION['id_usuario'] = $id_usuario;
+            $_SESSION['nombre_usuario'] = $nombre_usuario;
+            $_SESSION['id_rol'] = $id_rol;
+
+            // Redirigir según el rol
+            if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
+                header("Location: /proyecto/Proyecto/Vida_Azul/proyecto/listado.php");
+            } else {
+                header("Location: /proyecto/Proyecto/Vida_Azul/index.php");
+            }
+            exit();
+        } else {
+            $mensaje = "Correo o contraseña incorrectos.";
+            $tipo_mensaje = "danger";
+        }
+    } else {
+        $mensaje = "Error al preparar la consulta.";
+        $tipo_mensaje = "danger";
+    }
+}
+
+$conexion->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +92,7 @@
             <div class="col-md-3">
                 <div class="row py-2 justify-content-center">
                     <div class="col-md-12 py-4">
-                        <a href="/index.html" class="btn btn-primary"
+                        <a href="/proyecto/Vida_Azul/index.php" class="btn btn-primary"
                             style="background-color: #32746D; border: none">
                             <i class="fas fa-arrow-left" style="background-color: #32746D"></i> Regresar
                         </a>
@@ -41,22 +100,27 @@
                 </div>
                 <div class="row py-2 justify-content-center">
                     <div class="col-md-12 py-4">
+                        <?php if ($mensaje): ?>
+                            <div class="alert alert-<?= $tipo_mensaje; ?> text-center">
+                                <?= $mensaje; ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="card-header" style="background-color: #32746D; color: white; text-align: center;">
                             <h2>Iniciar Sesión</h2>
                         </div>
                         <div class="card-body" style="padding: 2rem;">
-                            <form method="post" action="/login">
+                            <form method="post" action="">
                                 <div class="mb-4">
-                                    <input type="text" class="form-control form-control-lg" name="username"
-                                        placeholder="Username">
+                                    <input type="email" class="form-control form-control-lg" name="username"
+                                        placeholder="Correo" required>
                                 </div>
                                 <div class="mb-4">
                                     <input type="password" class="form-control form-control-lg" name="password"
-                                        placeholder="Password">
+                                        placeholder="Contraseña" required>
                                 </div>
 
                                 <div class="mb-4">
-                                    <a class="dropdown-item text-center mb-2" href="/registro.html">Regístrate</a>
+                                    <a class="dropdown-item text-center mb-2" href="/proyecto/Vida_Azul/registro.php">Regístrate</a>
                                 </div>
 
                                 <div class="card-footer text-center">
@@ -83,7 +147,7 @@
     </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar.html')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

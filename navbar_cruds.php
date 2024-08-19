@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand py-3" href="../index.php"><strong>Vida Azul</strong></a>
+        <a class="navbar-brand py-3" href="index.php"><strong>Vida Azul</strong></a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
@@ -33,7 +33,7 @@
             </ul>
             <div class="d-flex align-items-center">
                 <input type="text" class="form-control search-bar" placeholder="Buscar">
-                <a href="/iniciarsesion.php" class="nav-icon"><i class="bi bi-person-circle"></i></a>
+                <a  class="nav-icon nav-link"href="../iniciarsesion.php"><i class="bi bi-person-circle"></i></a>
             </div>
         </div>
     </div>

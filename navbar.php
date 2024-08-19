@@ -27,7 +27,7 @@
             </ul>
             <div class="d-flex align-items-center ms-auto">
                 <input type="text" class="form-control search-bar" placeholder="Buscar...">
-                <a href="/iniciarsesion.php" class="nav-icon"><i class="bi bi-person-circle"></i></a>
+                <a  class="nav-icon nav-link"href="iniciarsesion.php"><i class="bi bi-person-circle"></i></a>
             </div>
         </div>
     </div>

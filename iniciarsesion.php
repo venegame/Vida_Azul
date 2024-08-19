@@ -120,7 +120,7 @@ $conexion->close();
                                 </div>
 
                                 <div class="mb-4">
-                                    <a class="dropdown-item text-center mb-2" href="/proyecto/Vida_Azul/registro.php">Regístrate</a>
+                                    <a class="dropdown-item text-center mb-2" href="registro.php">Regístrate</a>
                                 </div>
 
                                 <div class="card-footer text-center">

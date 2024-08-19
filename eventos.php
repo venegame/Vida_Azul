@@ -17,7 +17,7 @@
             <br>
             <div class="row">
                             <?php
-                            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul","3307");
                             if ($conexion->connect_error) {
                                 die("Conexión fallida: " . $conexion->connect_error);
                             }

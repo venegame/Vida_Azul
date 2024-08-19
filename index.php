@@ -15,7 +15,7 @@
     <div id="navbar-placeholder"></div>
 
     <section id="inicio">
-        <div class="jumbotron-fluid text-center img_inicio" style=" background-image: url('https://static.vecteezy.com/system/resources/previews/010/970/477/non_2x/nature-of-green-leaf-environment-ecology-greenery-wallpaper-free-photo.jpg');
+        <div class="jumbotron-fluid text-center img_inicio" style="background-image: url('https://static.vecteezy.com/system/resources/previews/010/970/477/non_2x/nature-of-green-leaf-environment-ecology-greenery-wallpaper-free-photo.jpg');
              background-size: auto;
              color:#02020a;
              background-size: 100% 100%;
@@ -29,66 +29,60 @@
                         Actúa</strong></p>
             </div>
         </div>
-
     </section>
 
     <div class="container container-fluid p-0">
         <div class="container mt-5">
             <h2>Eventos</h2>
-            <h5>Visualiza los eventos de tu interés e inscríbete!.</h5>
+            <h5>¡Visualiza los eventos de tu interés e inscríbete!</h5>
             <br>
             <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a>
-                            <img src="a_Images/359823697_644929064334975_7103718428630239311_n.jpg" alt="Cinque Terre"
-                                class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                        <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a>
-                            <img src="a_Images/LIPIC2017062.jpg" alt="Forest" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                        <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a>
-                            <img src="a_Images/DSCN0944.jpg" alt="Northern Lights" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                        <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a>
-                            <img src="a_Images/la-poma.jpg" alt="Cinque Terre" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                        <div class="center-btn">
-                            <a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                // Configuración de conexión a la base de datos
+                $host = 'localhost';
+                $usuario = 'vida_azul';
+                $contrasena = 'vidaazul';
+                $base_datos = 'vida_azul';
+
+                // Crear conexión
+                $conexion = new mysqli($host, $usuario, $contrasena, $base_datos, "3307");
+
+                // Verificar conexión
+                if ($conexion->connect_error) {
+                    die("Error de conexión: " . $conexion->connect_error);
+                }
+
+                // Consultar los 4 eventos más recientes
+                $sql = "SELECT nombre_evento, fecha_evento, descripcion, imagen FROM eventos ORDER BY fecha_evento ASC LIMIT 4";
+                $resultado = $conexion->query($sql);
+
+                // Verificar si hay resultados
+                if ($resultado->num_rows > 0) {
+                    // Mostrar eventos
+                    while ($eventos = $resultado->fetch_assoc()) {
+                        echo '<div class="col-sm-6 col-md-4 col-lg-3 mb-4">';
+                        echo '<div class="gallery">';
+                        echo '<a>';
+                        echo '<img src="' . $eventos['imagen'] . '" alt="' . $eventos['nombre_evento'] . '" class="img-fluid">';
+                        echo '</a>';
+                        echo '<div class="desc">' . $eventos['descripcion'] . '</div>';
+                        echo '<div class="center-btn">';
+                        echo '<a href="infoEvento.html" class="btn btn-primary mt-2">Más información</a>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>No hay eventos disponibles.</p>';
+                }
+
+                $conexion->close();
+                ?>
             </div>
         </div>
     </div>
 
-
-    <div class="p-4"> </div>
+    <div class="p-4"></div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
         <div class="container ">

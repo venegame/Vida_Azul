@@ -1,6 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+// Conexión a la base de datos
+$host = "localhost";
+$user = "root"; // Cambiar si es necesario
+$password = ""; // Cambiar si es necesario
+$database = "vida_azul";
 
+// Crear conexión
+$conn = new mysqli("localhost", "root", "", "vida_azul");
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("La conexión a la base de datos falló: " . $conn->connect_error);
+}
+
+// Inicializar variables para evitar errores de "undefined array key"
+$nombre = '';
+$comentario = '';
+
+// Procesar el formulario al enviar
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre']) && isset($_POST['comentario'])) {
+    $nombre = trim($_POST['nombre']);
+    $comentario = trim($_POST['comentario']);
+
+    if ($comentario !== '') {
+        $fechaComentario = date('Y-m-d H:i:s');
+
+        $stmt = $conn->prepare("SELECT id_usuario FROM usuario WHERE nombre_usuario = ?");
+        $stmt->bind_param("s", $nombre);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $id_usuario = $row['id_usuario'];
+        } else {
+            $id_usuario = NULL;
+        }
+
+        $stmt->close();
+
+        $stmt = $conn->prepare("INSERT INTO comentario (id_usuario, fecha_comentario, comentario) VALUES (?, ?, ?)");
+        $stmt->bind_param("iss", $id_usuario, $fechaComentario, $comentario);
+
+        if ($stmt->execute()) {
+            header("Location: opiniones.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        echo "El comentario no puede estar vacío.";
+    }
+}
+
+// Procesar la eliminación del comentario
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_comment'])) {
+    $id_comentario = $_POST['id_comentario'];
+
+    $stmt = $conn->prepare("DELETE FROM comentario WHERE id_comentario = ?");
+    $stmt->bind_param("i", $id_comentario);
+
+    if ($stmt->execute()) {
+        header("Location: opiniones.php");
+        exit();
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
+// Obtener todos los comentarios para mostrar
+$comentarios = $conn->query("SELECT comentario.id_comentario, usuario.nombre_usuario, comentario.fecha_comentario, comentario.comentario FROM comentario LEFT JOIN usuario ON comentario.id_usuario = usuario.id_usuario ORDER BY comentario.fecha_comentario DESC");
+?>
+
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +86,38 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <title>Opiniones - Vida Azul</title>
+    <style>
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .comment-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .comment-header span {
+            margin-right: auto;
+            margin-left: 10px;
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+        .btn-sm {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+        }
+        .btn-sm i {
+            margin: 0;
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Aquí se mostrarán el Navbar -->
+    <!-- Navbar -->
     <div id="navbar-placeholder"></div>
 
+    <!-- Encabezado de la página -->
     <div class="project-header">
         <img src="https://images.pexels.com/photos/3264779/pexels-photo-3264779.jpeg" alt="Vida Azul"
             class="project-image">
@@ -22,21 +125,39 @@
     </div>
 
     <div class="container my-4">
-        <h2 class="text-center">Ayudanos a crecer, brindanos tu opinion</h2>
+        <h2 class="text-center">Ayúdanos a crecer, bríndanos tu opinión</h2>
 
-        <form id="commentForm" class="my-4">
+        <!-- Formulario de comentarios -->
+        <form id="commentForm" method="POST" class="my-4">
             <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" required>
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
             <div class="mb-3">
-                <label for="comment" class="form-label">Escribe tu comentario</label>
-                <textarea class="form-control" id="comment" rows="3" required></textarea>
+                <label for="comentario" class="form-label">Escribe tu comentario</label>
+                <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Publicar</button>
         </form>
+
+        <!-- Sección de comentarios -->
         <div id="commentsSection">
-            <!-- Aquí se mostrarán los comentarios -->
+            <?php while($row = $comentarios->fetch_assoc()): ?>
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <strong><?php echo htmlspecialchars($row['nombre_usuario'] ?? 'Anónimo'); ?></strong>
+                        <span><?php echo $row['fecha_comentario']; ?></span>
+                        <div class="comment-actions">
+                            <!-- Botón para eliminar comentario -->
+                            <form method="POST" style="display: inline;">
+                                <input type="hidden" name="id_comentario" value="<?php echo $row['id_comentario']; ?>">
+                                <button type="submit" name="delete_comment" class="btn bi bi-trash"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <p class="comment-text"><?php echo htmlspecialchars($row['comentario']); ?></p>
+                </div>
+            <?php endwhile; ?>
         </div>
     </div>
 
@@ -45,115 +166,11 @@
             <p>&COPY;Vida Azul Derechos Reservados 2024</p>
         </div>
     </footer>
-    <script>
-        // Espera a que todo el contenido del DOM esté completamente cargado antes de ejecutar el script
-        document.addEventListener('DOMContentLoaded', () => {
-            // Obtiene el formulario de comentarios por su ID
-            const commentForm = document.getElementById('commentForm');
-            // Obtiene el campo de entrada del nombre por su ID
-            const nameInput = document.getElementById('name');
-            // Obtiene el campo de entrada del comentario por su ID
-            const commentInput = document.getElementById('comment');
-            // Obtiene la sección donde se mostrarán los comentarios por su ID
-            const commentsSection = document.getElementById('commentsSection');
 
-            // Agrega un evento al formulario para manejar el envío
-            commentForm.addEventListener('submit', (e) => {
-                // Previene el comportamiento predeterminado del formulario (recargar la página)
-                e.preventDefault();
-                // Obtiene y limpia los valores de los campos de entrada
-                const name = nameInput.value.trim();
-                const commentText = commentInput.value.trim();
-                // Obtiene la fecha actual en formato local
-                const date = new Date().toLocaleDateString();
-                // Si el nombre y el comentario no están vacíos
-                if (name && commentText) {
-                    // Llama a la función para agregar el comentario
-                    addComment(name, commentText, date);
-                    // Limpia los campos de entrada
-                    nameInput.value = '';
-                    commentInput.value = '';
-                }
-            });
-
-            // Función para agregar un nuevo comentario
-            function addComment(name, text, date) {
-                // Crea un nuevo div para la tarjeta del comentario
-                const commentCard = document.createElement('div');
-                // Agrega la clase 'comment-card' al div
-                commentCard.classList.add('comment-card');
-
-                // Crea un nuevo div para el encabezado del comentario
-                const commentHeader = document.createElement('div');
-                // Agrega la clase 'comment-header' al div
-                commentHeader.classList.add('comment-header');
-
-                // Crea un elemento 'strong' para el autor del comentario
-                const commentAuthor = document.createElement('strong');
-                // Establece el contenido de texto del autor con el nombre y la fecha
-                commentAuthor.textContent = `${name} - ${date}`;
-
-                // Crea un nuevo párrafo para el texto del comentario
-                const commentText = document.createElement('p');
-                // Agrega la clase 'comment-text' al párrafo
-                commentText.classList.add('comment-text');
-                // Establece el contenido de texto del párrafo con el comentario
-                commentText.textContent = text;
-
-                // Crea un nuevo div para las acciones del comentario (editar/eliminar)
-                const commentActions = document.createElement('div');
-                // Agrega la clase 'comment-actions' al div
-                commentActions.classList.add('comment-actions');
-                // Establece el contenido HTML del div con los íconos de edición y eliminación
-                commentActions.innerHTML = `
-                    <i class="bi bi-pencil-square edit-icon"></i>
-                    <i class="bi bi-trash delete-icon"></i>
-                `;
-
-                // Añade el autor y las acciones al encabezado del comentario
-                commentHeader.appendChild(commentAuthor);
-                commentHeader.appendChild(commentActions);
-                // Añade el encabezado y el texto del comentario a la tarjeta del comentario
-                commentCard.appendChild(commentHeader);
-                commentCard.appendChild(commentText);
-                // Añade la tarjeta del comentario a la sección de comentarios
-                commentsSection.appendChild(commentCard);
-
-                // Selecciona el ícono de edición y le agrega un evento de clic para editar el comentario
-                const editIcon = commentActions.querySelector('.edit-icon');
-                // Selecciona el ícono de eliminación y le agrega un evento de clic para eliminar el comentario
-                const deleteIcon = commentActions.querySelector('.delete-icon');
-
-                // Evento para editar el comentario
-                editIcon.addEventListener('click', () => editComment(commentCard, commentText));
-                // Evento para eliminar el comentario
-                deleteIcon.addEventListener('click', () => deleteComment(commentCard));
-            }
-
-            // Función para editar un comentario
-            function editComment(card, textElement) {
-                // Solicita al usuario que edite su comentario
-                const newText = prompt('Edita tu comentario:', textElement.textContent);
-                // Si el nuevo texto no es nulo, actualiza el contenido del comentario
-                if (newText !== null) {
-                    textElement.textContent = newText.trim();
-                }
-            }
-
-            // Función para eliminar un comentario
-            function deleteComment(card) {
-                // Confirma si el usuario quiere eliminar el comentario
-                if (confirm('¿Estás seguro de eliminar este comentario?')) {
-                    // Elimina la tarjeta del comentario del DOM
-                    card.remove();
-                }
-            }
-        });
-    </script>
-
+    <!-- Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar.html')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;
@@ -161,6 +178,12 @@
                 .catch(error => console.error('Error al cargar el navbar:', error));
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNpD3rrqJpoMxO2kWklO5LKo4KNAXzJ6pEI3UU6p7UANFUbe1ybFf5OOGecfKq" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGfriJr4j3LaFf8iSO6F38VRz8CU5u0pYZ7r7t2C0BIpFz8GA7rXGf3z7Lx" crossorigin="anonymous"></script>
 </body>
-
 </html>
+
+<?php
+// Cerrar conexión
+$conn->close();
+?>

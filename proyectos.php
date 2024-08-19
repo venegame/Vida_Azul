@@ -1,3 +1,25 @@
+<?php
+// Conexión a la base de datos
+$host = "localhost";
+$user = "root"; // Cambiar si es necesario
+$password = ""; // Cambiar si es necesario
+$database = "vida_azul";
+
+// Crear conexión
+$conn = new mysqli("localhost", "root", "", "vida_azul");
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("La conexión a la base de datos falló: " . $conn->connect_error);
+}
+
+// Obtener proyectos en ejecución
+$proyectosEnEjecucion = $conn->query("SELECT * FROM proyecto WHERE estado_proyecto = 'En Progreso'");
+
+// Obtener proyectos concluidos
+$proyectosConcluidos = $conn->query("SELECT * FROM proyecto WHERE estado_proyecto = 'Completado'");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,98 +33,31 @@
 <body>
     <div id="navbar-placeholder"></div>
 
-
     <div class="content">
         <h2>Proyectos en Ejecución</h2>
         <div class="projects-grid">
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/02/FOTO-6.jpg.webp" alt="Proyecto 1">
-                <div class="card-content">
-                    <h3>Proyecto 1</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
+            <?php while($proyecto = $proyectosEnEjecucion->fetch_assoc()): ?>
+                <div class="project-card">
+                    <img src="https://img.freepik.com/foto-gratis/papeles-comerciales-naturaleza-muerta-varias-piezas-mecanismo_23-2149352652.jpg" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
+                    <div class="card-content">
+                        <h3><?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?></h3>
+                        <a href="proyectosDetalle.php?id=<?php echo $proyecto['id_proyecto']; ?>" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
+                    </div>
                 </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/02/FOTO-6.jpg.webp" alt="Proyecto 2">
-                <div class="card-content">
-                    <h3>Proyecto 2</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/02/FOTO-6.jpg.webp" alt="Proyecto 3">
-                <div class="card-content">
-                    <h3>Proyecto 3</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/02/FOTO-6.jpg.webp" alt="Proyecto 4">
-                <div class="card-content">
-                    <h3>Proyecto 4</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/02/FOTO-6.jpg.webp" alt="Proyecto 5">
-                <div class="card-content">
-                    <h3>Proyecto 5</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/02/FOTO-6.jpg.webp" alt="Proyecto 6">
-                <div class="card-content">
-                    <h3>Proyecto 6</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
+            <?php endwhile; ?>
         </div>
 
         <h2>Proyectos Concluidos</h2>
         <div class="projects-grid">
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/01/pexels-bruno-scramgnon-Servicios-Ecosistemicos-Fundacion-Banco-Ambiental-scaled-1536x1018.jpg.webp" alt="Proyecto 1">
-                <div class="card-content">
-                    <h3>Proyecto 1</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
+            <?php while($proyecto = $proyectosConcluidos->fetch_assoc()): ?>
+                <div class="project-card">
+                    <img src="https://lh3.googleusercontent.com/proxy/2BF9CmtTrn_gRDJ0fLuDQGWiuiG3TX90PXOassiZDTYKFnWK2sDvSGuozfjFLjlk5D-7zDHt0cjpdw7cpzDNR563iIRPRkh5hOWGJ7hN2QT6LUPqmfHFFsC-tQ_d633u6XCqMyggEJE" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
+                    <div class="card-content">
+                        <h3><?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?></h3>
+                        <a href="proyectosDetalle.php?id=<?php echo $proyecto['id_proyecto']; ?>" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
+                    </div>
                 </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/01/pexels-bruno-scramgnon-Servicios-Ecosistemicos-Fundacion-Banco-Ambiental-scaled-1536x1018.jpg.webp" alt="Proyecto 2">
-                <div class="card-content">
-                    <h3>Proyecto 2</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/01/pexels-bruno-scramgnon-Servicios-Ecosistemicos-Fundacion-Banco-Ambiental-scaled-1536x1018.jpg.webp" alt="Proyecto 3">
-                <div class="card-content">
-                    <h3>Proyecto 3</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/01/pexels-bruno-scramgnon-Servicios-Ecosistemicos-Fundacion-Banco-Ambiental-scaled-1536x1018.jpg.webp" alt="Proyecto 4">
-                <div class="card-content">
-                    <h3>Proyecto 4</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/01/pexels-bruno-scramgnon-Servicios-Ecosistemicos-Fundacion-Banco-Ambiental-scaled-1536x1018.jpg.webp" alt="Proyecto 5">
-                <div class="card-content">
-                    <h3>Proyecto 5</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="https://funbam.org/wp-content/webp-express/webp-images/uploads/2022/01/pexels-bruno-scramgnon-Servicios-Ecosistemicos-Fundacion-Banco-Ambiental-scaled-1536x1018.jpg.webp" alt="Proyecto 6">
-                <div class="card-content">
-                    <h3>Proyecto 6</h3>
-                    <a href="proyectosDetalle.html" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
-                </div>
-            </div>
+            <?php endwhile; ?>
         </div>
     </div>
 
@@ -116,7 +71,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar.html')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;
@@ -127,3 +82,8 @@
 
 </body>
 </html>
+
+<?php
+// Cerrar la conexión a la base de datos
+$conn->close();
+?>

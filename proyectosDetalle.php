@@ -1,6 +1,53 @@
+<?php
+// Conexión a la base de datos
+$host = "localhost";
+$user = "root"; // Cambiar si es necesario
+$password = ""; // Cambiar si es necesario
+$database = "vida_azul";
+
+// Crear conexión
+$conn = new mysqli("localhost", "root", "", "vida_azul");
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("La conexión a la base de datos falló: " . $conn->connect_error);
+}
+
+// Obtener el ID del proyecto desde la URL
+$id_proyecto = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Obtener los detalles del proyecto
+$stmt = $conn->prepare("SELECT p.*, u.nombre_usuario, u.apellido_usuario, c.nombre_categoria 
+                        FROM proyecto p
+                        LEFT JOIN usuario u ON p.id_usuario = u.id_usuario
+                        LEFT JOIN categoria c ON p.id_categoria = c.id_categoria
+                        WHERE p.id_proyecto = ?");
+$stmt->bind_param("i", $id_proyecto);
+$stmt->execute();
+$result = $stmt->get_result();
+$proyecto = $result->fetch_assoc();
+
+if (!$proyecto) {
+    die("Proyecto no encontrado.");
+}
+
+$stmt->close();
+
+// Obtener las imágenes del proyecto
+$stmt = $conn->prepare("SELECT ruta_imagen FROM proyecto_imagenes WHERE id_proyecto = ?");
+$stmt->bind_param("i", $id_proyecto);
+$stmt->execute();
+$imagenes_result = $stmt->get_result();
+$imagenes = [];
+while ($row = $imagenes_result->fetch_assoc()) {
+    $imagenes[] = $row['ruta_imagen'];
+}
+
+$stmt->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,92 +55,30 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
-    <title>Detalle del Proyecto - Vida Azul</title>
+    <title><?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?> - Detalle del Proyecto</title>
 </head>
 
 <body>
     <div id="navbar-placeholder"></div>
 
     <div class="project-header">
-        <img src="https://images.pexels.com/photos/3264779/pexels-photo-3264779.jpeg" alt="Nombre del Proyecto"
-            class="project-image">
-        <h2 class="centered">Proyecto #</h2>
+        <img src="https://www.ultraimagehub.com/wallpapers/tr:flp-false,gx-0.7,gy-0.5,q-75,rh-3264,rw-5824,th-768,tw-1366/1242066965409824808.jpeg" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>" class="project-image">
+        <h2 class="centered"><?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?></h2>
     </div>
 
-    <div class="project-detail content">
-        <p class="project-description">El pasaje estándar Lorem Ipsum, usado desde el año 1500.
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum."
+    <div class="container my-4">
+        <div class="project-detail content">
+            <p><strong>Descripción del Proyecto:</strong> <?php echo htmlspecialchars($proyecto['detalle_proyecto']); ?></p>
+            <p><strong>Responsable:</strong> <?php echo htmlspecialchars($proyecto['nombre_usuario'] . ' ' . $proyecto['apellido_usuario']); ?></p>
+            <p><strong>Categoría:</strong> <?php echo htmlspecialchars($proyecto['nombre_categoria']); ?></p>
+            <p><strong>Estado:</strong> <?php echo htmlspecialchars($proyecto['estado_proyecto']); ?></p>
 
-            Sección 1.10.32 de "de Finibus Bonorum et Malorum", escrito por Cicero en el 45 antes de Cristo
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-            aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-            dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-            sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
-            magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in
-            ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas
-            nulla pariatur?"
-
-            Traduccion hecha por H. Rackham en 1914
-            "But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and
-            I will give you a complete account of the system, and expound the actual teachings of the great explorer of
-            the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself,
-            because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter
-            consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain
-            pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can
-            procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical
-            exercise, except to obtain some advantage from it? But who has any right to find fault with a man who
-            chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no
-            resultant pleasure?"
-
-            Sección 1.10.33 de "de Finibus Bonorum et Malorum", escrito por Cicero en el 45 antes de Cristo
-            "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-            atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
-            sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
-            facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-            impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor
-            repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et
-            voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus,
-            ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
-
-            Traduccion hecha por H. Rackham en 1914
-            "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and
-            demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain
-            and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through
-            weakness of will, which is the same as saying through shrinking from toil and pain. These cases are
-            perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when
-            nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain
-            avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will
-            frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always
-            holds in these matters to this principle of selection: he rejects pleasures to secure other greater
-            pleasures, or else he endures pains to avoid worse pains.".</p>
-
-        <h3 class="centered">Imágenes</h3>
-        <div class="image-gallery">
-            <div class="gallery-item"><img
-                    src="https://images.pexels.com/photos/8543606/pexels-photo-8543606.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Imagen 1"></div>
-            <div class="gallery-item"><img
-                    src="https://images.pexels.com/photos/12730913/pexels-photo-12730913.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Imagen 2"></div>
-            <div class="gallery-item"><img
-                    src="https://images.pexels.com/photos/12730915/pexels-photo-12730915.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Imagen 3"></div>
-            <div class="gallery-item"><img
-                    src="https://images.pexels.com/photos/5029853/pexels-photo-5029853.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Imagen 4"></div>
-            <div class="gallery-item"><img
-                    src="https://images.pexels.com/photos/2583836/pexels-photo-2583836.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Imagen 5"></div>
-            <div class="gallery-item"><img
-                    src="https://images.pexels.com/photos/9543409/pexels-photo-9543409.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Imagen 6"></div>
-            <!-- Repite las imágenes según sea necesario -->
+            <h3 class="centered">Imágenes</h3>
+            <div class="image-gallery">
+                <?php foreach ($imagenes as $imagen): ?>
+                    <div class="gallery-item"><img src="<?php echo htmlspecialchars($imagen); ?>" alt="Imagen del proyecto"></div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 
@@ -118,7 +103,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar.html')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;
@@ -129,3 +114,8 @@
 </body>
 
 </html>
+
+<?php
+// Cerrar la conexión a la base de datos
+$conn->close();
+?>

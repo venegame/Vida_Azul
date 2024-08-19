@@ -35,24 +35,24 @@
                     if ($conexion->connect_error) {
                         die("Conexión fallida: " . $conexion->connect_error);
                     }
-                    $sql = "SELECT id_imagen, id_usuario, titulo_imagen, imagen_url FROM galeria";
+                    $sql = "SELECT id_imagen, id_usuario, titulo, imagen FROM galeria";
                     $result = $conexion->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             $id_imagen = $row['id_imagen'];
                             $id_usuario = $row['id_usuario'];
-                            $titulo_imagen = $row['titulo_imagen'];
-                            $imagen_url = $row['imagen_url'];
+                            $titulo = $row['titulo'];
+                            $imagen = $row['imagen'];
                 ?>
 
                 <tbody>
                     <tr>
-                        <td name="id_imagen"><?php echo $id_imagen; ?></td>
-                        <td name="id_usuario"><?php echo $id_usuario; ?></td>
-                        <td name="titulo_imagen"><?php echo $titulo_imagen; ?></td>
-                        <td name="imagen_url"><?php echo $imagen_url; ?></td>
+                        <td name="id_imagen" class="truncate2"><?php echo $id_imagen; ?></td>
+                        <td name="id_usuario" class="truncate2"><?php echo $id_usuario; ?></td>
+                        <td name="titulo" class="truncate2"><?php echo $titulo; ?></td>
+                        <td name="imagen" class="truncate2"><?php echo $imagen; ?></td>
                         <td>
-                            <a href="edita.php" class="btn btn-sm me-2"
+                            <a href="edita.php?id=<?php echo $id_imagen; ?>" class="btn btn-sm me-2"
                                 style="background-color: #94C132; color: white;">Editar</a>
 
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"

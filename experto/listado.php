@@ -33,12 +33,12 @@
                     if ($conexion->connect_error) {
                         die("Conexión fallida: " . $conexion->connect_error);
                     }
-                    $sql = "SELECT id_experto, categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
+                    $sql = "SELECT id_experto, id_categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
                     $result = $conexion->query($sql);
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             $id = $row['id_experto'];
-                            $categoria = $row['categoria'];
+                            $id_categoria = $row['id_categoria'];
                             $nombre = $row['nombre_experto'];
                             $quienes_somos = $row['quienes_somos'];
                             $historia_expertos = $row['historia_expertos'];
@@ -49,12 +49,12 @@
                 ?>
                 <tbody>
                     <tr>
-                        <td name="id"><?php echo $id; ?></td>
-                        <td name="categoria"><?php echo $categoria; ?></td>
-                        <td name="nombre"><?php echo $nombre; ?></td>
-                        <td name="quienes_somos"><?php echo $quienes_somos; ?></td>
-                        <td name="historia_expertos" ><?php echo $historia_expertos; ?></td>
-                        <td name="Links"><?php echo $url_instagram; ?> <br> <?php echo $url_x; ?> <br> <?php echo $url_youtube; ?> <br> <?php echo $url_facebook; ?></td>
+                        <td name="id" class="truncateless"><?php echo $id; ?></td>
+                        <td name="id_categoria" class="truncateless"><?php echo $id_categoria; ?></td>
+                        <td name="nombre" class="truncateless"><?php echo $nombre; ?></td>
+                        <td name="quienes_somos" class="truncateless"><?php echo $quienes_somos; ?></td>
+                        <td name="historia_expertos" class="truncateless"><?php echo $historia_expertos; ?></td>
+                        <td name="Links" class="truncateless"><?php echo $url_instagram; ?> <br> <?php echo $url_x; ?> <br> <?php echo $url_youtube; ?> <br> <?php echo $url_facebook; ?></td>
                         <td style="display: flex; align-items: center;">
                             <a href="edita.php?id=<?php echo $id; ?>" class="btn btn-sm me-2"style="background-color: #94C132; color: white;">Editar</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?php echo $id; ?>">Eliminar</button>

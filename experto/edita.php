@@ -18,14 +18,14 @@
             if ($conexion->connect_error) {
                 die("Conexión fallida: " . $conexion->connect_error);
             }
-            $sql = "SELECT categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos WHERE id_experto = ?";
+            $sql = "SELECT id_categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos WHERE id_experto = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $categoria = $row['categoria'];
+                $id_categoria = $row['id_categoria'];
                 $nombre_experto = $row['nombre_experto'];
                 $quienes_somos = $row['quienes_somos'];
                 $historia_expertos = $row['historia_expertos'];
@@ -48,8 +48,20 @@
                     <input type="text" class="form-control" name="id_experto" value="<?php echo $id; ?>" readonly></input>
                 </div>
                 <div class="col-md-4">
-                    <label for="categoria" class="form-label">Categoria</label>
-                    <input type="text" class="form-control" name="categoria" value="<?php echo $categoria; ?>" required>
+                    <label for="id_categoria" class="form-label">Categoría</label>
+                    <select class="form-select" id="id_categoria" name="id_categoria" required>
+                        <?php
+                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                        if ($conexion->connect_error) {
+                            die("Conexión fallida: " . $conexion->connect_error);
+                        }
+                        // Obtener las categorías de la base de datos
+                        $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['id_categoria']}'>{$row['nombre_categoria']}</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label for="nombre_experto" class="form-label">Nombre Experto</label>
@@ -89,7 +101,7 @@
     <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $id_experto = $_POST['id_experto'];
-            $categoria = $_POST['categoria'];
+            $id_categoria = $_POST['id_categoria'];
             $nombre_experto = $_POST['nombre_experto'];
             $quienes_somos = $_POST['quienes_somos'];
             $historia_expertos = $_POST['historia_expertos'];
@@ -101,9 +113,9 @@
             if ($conexion->connect_error) {
                 die("Conexión fallida: " . $conexion->connect_error);
             }
-            $sql = "UPDATE expertos SET categoria = ?, nombre_experto = ?, quienes_somos = ?, historia_expertos = ?, url_instagram = ?, url_x = ?, url_youtube = ?, url_facebook = ? WHERE id_experto = ?";
+            $sql = "UPDATE expertos SET id_categoria = ?, nombre_experto = ?, quienes_somos = ?, historia_expertos = ?, url_instagram = ?, url_x = ?, url_youtube = ?, url_facebook = ? WHERE id_experto = ?";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("ssssssssi", $categoria, $nombre_experto, $quienes_somos, $historia_expertos, $url_instagram, $url_x, $url_youtube, $url_facebook, $id_experto);
+            $stmt->bind_param("ssssssssi", $id_categoria, $nombre_experto, $quienes_somos, $historia_expertos, $url_instagram, $url_x, $url_youtube, $url_facebook, $id_experto);
             if ($stmt->execute()) {
                 echo "<script>
                         window.addEventListener('load', function() {

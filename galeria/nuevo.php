@@ -32,13 +32,13 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="titulo_imagen" class="form-label">Título Imagen</label>
-                    <input type="text" class="form-control" id="titulo_imagen" name="titulo_imagen" required>
+                    <label for="titulo" class="form-label">Título Imagen</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" required>
                 </div>
 
                 <div class="col-md-4">
-                    <label for="imagen_url" class="form-label">Imagen URL</label>
-                    <input type="text" class="form-control" id="imagen_url" name="imagen_url" required>
+                    <label for="imagen" class="form-label">Imagen URL</label>
+                    <input type="text" class="form-control" id="imagen" name="imagen" required>
                 </div>
 
                 <div class="col-12">
@@ -53,15 +53,15 @@
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $id_imagen = $_POST['id_imagen'];
                 $id_usuario = $_POST['id_usuario'];
-                $titulo_imagen = $_POST['titulo_imagen'];
-                $imagen_url = $_POST['imagen_url'];
+                $titulo = $_POST['titulo'];
+                $imagen = $_POST['imagen'];
                 $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
                 if ($conexion->connect_error) {
                     die("Conexión fallida: " . $conexion->connect_error);
                 }
-                $sql = "INSERT INTO galeria (id_imagen, id_usuario, titulo_imagen, imagen_url) VALUES (?, ?, ?, ?)";
+                $sql = "INSERT INTO galeria (id_imagen, id_usuario, titulo, imagen) VALUES (?, ?, ?, ?)";
                 $stmt = $conexion->prepare($sql);
-                $stmt->bind_param("ssss", $id_imagen, $id_usuario, $titulo_imagen, $imagen_url);
+                $stmt->bind_param("ssss", $id_imagen, $id_usuario, $titulo, $imagen);
                 if ($stmt->execute()) {
                     echo "<script>
                             window.addEventListener('load', function() {

@@ -22,8 +22,20 @@
                     <input type="text" class="form-control" name="nombre_experto" required>
                 </div>
                 <div class="col-md-4">
-                    <label for="categoria" class="form-label">Categoria</label>
-                    <input type="text" class="form-control" name="categoria" required autofocus>
+                    <label for="id_categoria" class="form-label">Categoría</label>
+                    <select class="form-select" id="id_categoria" name="id_categoria" required>
+                        <?php
+                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                        if ($conexion->connect_error) {
+                            die("Conexión fallida: " . $conexion->connect_error);
+                        }
+                        // Obtener las categorías de la base de datos
+                        $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['id_categoria']}'>{$row['nombre_categoria']}</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <label for="quienes_somos" class="form-label">¿Quiénes Somos?</label>
@@ -58,7 +70,7 @@
         <?php
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $nombre_experto = $_POST['nombre_experto'];
-                $categoria = $_POST['categoria'];
+                $id_categoria = $_POST['id_categoria'];
                 $quienes_somos = $_POST['quienes_somos'];
                 $historia_expertos = $_POST['historia_expertos'];
                 $url_instagram = $_POST['url_instagram'];
@@ -69,9 +81,9 @@
                 if ($conexion->connect_error) {
                     die("Conexión fallida: " . $conexion->connect_error);
                 }
-                $sql = "INSERT INTO expertos (nombre_experto, categoria, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO expertos (nombre_experto, id_categoria, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conexion->prepare($sql);
-                $stmt->bind_param("ssssssss", $nombre_experto, $categoria, $quienes_somos, $historia_expertos, $url_instagram, $url_x, $url_youtube, $url_facebook);
+                $stmt->bind_param("ssssssss", $nombre_experto, $id_categoria, $quienes_somos, $historia_expertos, $url_instagram, $url_x, $url_youtube, $url_facebook);
                 if ($stmt->execute()) {
                     echo "<script>
                             window.addEventListener('load', function() {

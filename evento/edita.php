@@ -13,7 +13,32 @@
 
 <body class="d-flex flex-column h-100">
     <div id="navbar-placeholder"></div>
-
+    <?php
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+            if ($conexion->connect_error) {
+                die("Conexión fallida: " . $conexion->connect_error);
+            }
+            $sql = "SELECT id_evento, nombre_evento, descripcion, imagen, fecha_evento, id_categoria FROM eventos WHERE id_evento = ?";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $id_evento = $row['id_evento'];
+                $nombre_evento = $row['nombre_evento'];
+                $descripcion = $row['descripcion'];
+                $imagen = $row['imagen'];
+                $fecha_evento = $row['fecha_evento'];
+                $id_categoria = $row['id_categoria'];
+            }
+            $conexion->close();
+        } else {
+            echo "No se encontro el ID del evento.";
+        }
+    ?>
     <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             var_dump($_POST);
@@ -52,36 +77,48 @@
         <div class="container">
             <h3 class="my-3">Editar evento</h3>
 
-            <form action="#" class="row g-3" method="post" autocomplete="off">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" class="row g-3" method="post">
 
                 <div class="col-md-4">
                     <label for="id_evento" class="form-label">ID Evento</label>
-                    <input type="text" class="form-control" id="id_evento" name="id_evento" required autofocus>
+                    <input type="text" class="form-control" id="id_evento" name="id_evento" required readonly value="<?php echo isset($id_evento) ? $id_evento : ''; ?>">
                 </div>
 
                 <div class="col-md-4">
                     <label for="nombre_evento" class="form-label">Nombre Evento</label>
-                    <input type="text" class="form-control" id="nombre_evento" name="nombre_evento" required>
+                    <input type="text" class="form-control" id="nombre_evento" name="nombre_evento" required value="<?php echo isset($nombre_evento) ? $nombre_evento : ''; ?>">
                 </div>
 
                 <div class="col-md-4">
                     <label for="descripcion" class="form-label">Descripción</label>
-                    <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" required value="<?php echo isset($descripcion) ? $descripcion : ''; ?>">
                 </div>
 
                 <div class="col-md-6">
                     <label for="imagen" class="form-label">Imagen URL</label>
-                    <input type="text" class="form-control" id="imagen" name="imagen">
+                    <input type="text" class="form-control" id="imagen" name="imagen" required value="<?php echo isset($imagen) ? $imagen : ''; ?>">
                 </div>
 
                 <div class="col-md-6">
                     <label for="fecha_evento" class="form-label">Fecha Evento</label>
-                    <input type="date" class="form-control" id="fecha_evento" name="fecha_evento" required>
+                    <input type="date" class="form-control" id="fecha_evento" name="fecha_evento" required value="<?php echo isset($fecha_evento) ? $fecha_evento : ''; ?>">
                 </div>
 
                 <div class="col-md-6">
                     <label for="id_categoria" class="form-label">Categoría</label>
-                    <input type="text" class="form-control" id="id_categoria" name="id_categoria" required>
+                    <select class="form-select" id="id_categoria" name="id_categoria" required>
+                        <?php
+                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                        if ($conexion->connect_error) {
+                            die("Conexión fallida: " . $conexion->connect_error);
+                        }
+                        // Obtener las categorías de la base de datos
+                        $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row['id_categoria']}'>{$row['nombre_categoria']}</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="col-12">

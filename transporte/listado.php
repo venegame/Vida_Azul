@@ -45,12 +45,12 @@
                 ?>
                 <tbody>
                     <tr>
-                        <td name="id"><?php echo $id; ?></td>
-                        <td name="id_usuario"><?php echo $id_usuario; ?></td>
-                        <td name="nombre_transporte"><?php echo $nombre_transporte; ?></td>
-                        <td name="ruta_transporte"><?php echo $ruta_transporte; ?></td>
-                        <td name="horario_transporte"><?php echo $horario_transporte; ?></td>
-                        <td name="precio_transporte"><?php echo $precio_transporte; ?></td>
+                        <td name="id" class="truncate2"><?php echo $id; ?></td>
+                        <td name="id_usuario" class="truncate2"><?php echo $id_usuario; ?></td>
+                        <td name="nombre_transporte" class="truncate2"><?php echo $nombre_transporte; ?></td>
+                        <td name="ruta_transporte" class="truncate2"><?php echo $ruta_transporte; ?></td>
+                        <td name="horario_transporte" class="truncate2"><?php echo $horario_transporte; ?></td>
+                        <td name="precio_transporte" class="truncate2"><?php echo $precio_transporte; ?></td>
                         <td style="display: flex; align-items: center;">
                             <a href="edita.php?id=<?php echo $id; ?>" class="btn btn-sm me-2"style="background-color: #94C132; color: white;">Editar</a>
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?php echo $id; ?>">Eliminar</button>

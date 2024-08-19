@@ -1,46 +1,20 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: 19-08-2024 a las 23:11:07
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `vida_azul`
---
-
-DROP DATABASE IF EXISTS vida_azul;
-CREATE DATABASE `vida_azul` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `vida_azul` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `vida_azul`;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `categoria`
---
-
 DROP TABLE IF EXISTS `categoria`;
-CREATE TABLE IF NOT EXISTS `categoria` (
-  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_categoria` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categoria`
---
+CREATE TABLE `categoria` (
+  `id_categoria` int(11) NOT NULL,
+  `nombre_categoria` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`) VALUES
 (1, 'Energía Sostenible'),
@@ -53,25 +27,13 @@ INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`) VALUES
 (8, 'Articulo'),
 (9, 'Curso');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `comentario`
---
-
 DROP TABLE IF EXISTS `comentario`;
-CREATE TABLE IF NOT EXISTS `comentario` (
-  `id_comentario` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `comentario` (
+  `id_comentario` int(11) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `fecha_comentario` date NOT NULL,
-  `comentario` text NOT NULL,
-  PRIMARY KEY (`id_comentario`),
-  KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `comentario`
---
+  `comentario` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `comentario` (`id_comentario`, `id_usuario`, `fecha_comentario`, `comentario`) VALUES
 (1, 2, '2024-08-17', 'El proyecto de paneles solares ha sido un éxito en la comunidad.'),
@@ -80,27 +42,15 @@ INSERT INTO `comentario` (`id_comentario`, `id_usuario`, `fecha_comentario`, `co
 (4, 5, '2024-08-20', 'Las capacitaciones han generado un cambio positivo en los estudiantes.'),
 (5, 2, '2024-08-21', 'El voluntariado en la playa fue una experiencia enriquecedora.');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `evento`
---
-
 DROP TABLE IF EXISTS `eventos`;
-CREATE TABLE IF NOT EXISTS `eventos` (
-  `id_evento` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `eventos` (
+  `id_evento` int(11) NOT NULL,
   `id_categoria` int(11) DEFAULT NULL,
   `nombre_evento` varchar(100) NOT NULL,
   `fecha_evento` date NOT NULL,
   `descripcion` text DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_evento`),
-  KEY `id_categoria` (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `evento`
---
+  `imagen` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `eventos` (`id_evento`, `id_categoria`, `nombre_evento`, `fecha_evento`, `descripcion`, `imagen`) VALUES
 (1, 1, 'Seminario de Energía Renovable', '2024-09-15', 'Evento para discutir las últimas innovaciones en energía renovable', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZej7z_4OH_kOB7d_6Z_nkqQZR9eHCBDky6A&s'),
@@ -109,15 +59,9 @@ INSERT INTO `eventos` (`id_evento`, `id_categoria`, `nombre_evento`, `fecha_even
 (4, 4, 'Feria Ambiental Escolar', '2024-11-10', 'Feria educativa para concientizar a los estudiantes sobre temas ambientales', 'https://www.tec.ac.cr/hoyeneltec/sites/default/files/styles/colorbox/public/media/img/paragraph/invitacion_personalizada-02.png'),
 (5, 5, 'Día Internacional del Voluntariado', '2024-12-05', 'Celebración y reconocimiento a los voluntarios que han participado en los proyectos', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3RaAhJwVemyTP2qrK81hzqU4hxPBYLjrWlQ&s');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `expertos`
---
-
 DROP TABLE IF EXISTS `expertos`;
-CREATE TABLE IF NOT EXISTS `expertos` (
-  `id_experto` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `expertos` (
+  `id_experto` int(11) NOT NULL,
   `id_categoria` int(11) DEFAULT NULL,
   `nombre_experto` varchar(100) NOT NULL,
   `quienes_somos` text DEFAULT NULL,
@@ -125,38 +69,20 @@ CREATE TABLE IF NOT EXISTS `expertos` (
   `url_instagram` varchar(255) DEFAULT NULL,
   `url_x` varchar(255) DEFAULT NULL,
   `url_youtube` varchar(255) DEFAULT NULL,
-  `url_facebook` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_experto`),
-  KEY `id_categoria` (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `expertos`
---
+  `url_facebook` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `expertos` (`id_experto`, `id_categoria`, `nombre_experto`, `quienes_somos`, `historia_expertos`, `url_instagram`, `url_x`, `url_youtube`, `url_facebook`) VALUES
 (1, 6, 'Green Wolf Costa Rica', 'Green Wolf Costa Rica es un movimiento integral, inclusivo y sostenible, que busca la recuperación socio-ecosistémica de Costa Rica a través de la acción y alianzas intersectoriales.', 'Nacemos a partir de la preocupación de nuestro fundador, Ellian Villalobos, por la creciente contaminación de los ecosistemas costarricenses. Por esto, un 15 de diciembre de 2018 funda Green Wolf Costa Rica.', 'https://www.instagram.com/greenwolfcr/', 'https://x.com/greenwolfcr?lang=en', 'https://www.youtube.com/channel/UC6NRa0FDOb3pEx7xmX5P9fQ', 'https://www.facebook.com/GreenWolfCR'),
 (2, 7, 'Asociación Costa Rica por Siempre', 'Somos la Asociación Costa Rica por Siempre, una organización no gubernamental de carácter privado, creada en el 2010 como el segundo PFP del mundo, un modelo de financiamiento de proyectos para la permanencia (PFP).\r\n\r\nNos dedicamos a gestionar, invertir y movilizar recursos de Gobiernos, organismos internacionales y fundaciones privadas que buscan la conservación de la biodiversidad.', 'Nacimos bajo una alianza público-privada para apoyar al país en cumplir las metas del Convención de Diversidad Biológica (CDB) de las Naciones Unidas.', 'https://www.instagram.com/costaricaporsiempre/', 'https://x.com/CRporSiempre', 'https://www.youtube.com/channel/UCnpLXRSOKto1pOUxM5cbOQw', 'https://www.facebook.com/ACRXS');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `galeria`
---
-
 DROP TABLE IF EXISTS `galeria`;
-CREATE TABLE IF NOT EXISTS `galeria` (
-  `id_imagen` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `galeria` (
+  `id_imagen` int(11) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `imagen` varchar(255) DEFAULT NULL,
-  `titulo` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_imagen`),
-  KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `galeria`
---
+  `titulo` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `galeria` (`id_imagen`, `id_usuario`, `imagen`, `titulo`) VALUES
 (1, 2, 'https://www.infobae.com/new-resizer/Ntef1OEt7AsZhUpqmF_iNBbwapo=/1200x900/filters:format(webp):quality(85)/s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/31160504/DEF-Paneles-solares-escuelas-rurales-Portada.jpg', 'Instalación de Paneles Solares en Escuela Rural'),
@@ -165,28 +91,15 @@ INSERT INTO `galeria` (`id_imagen`, `id_usuario`, `imagen`, `titulo`) VALUES
 (4, 5, 'https://www.pactomundial.org/wp-content/uploads/2023/07/Post_Wordpress_-_1280_x_720-_4_-1024x576.webp', 'Capacitación sobre Sostenibilidad'),
 (5, 2, 'https://img.global.news.samsung.com/latin/wp-content/uploads/2018/10/VOL_12.jpg', 'Voluntariado de Limpieza de Playas');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `proyecto`
---
-
 DROP TABLE IF EXISTS `proyecto`;
-CREATE TABLE IF NOT EXISTS `proyecto` (
-  `id_proyecto` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `proyecto` (
+  `id_proyecto` int(11) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `id_categoria` int(11) DEFAULT NULL,
   `nombre_proyecto` varchar(100) NOT NULL,
   `detalle_proyecto` text DEFAULT NULL,
-  `estado_proyecto` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_proyecto`),
-  KEY `id_usuario` (`id_usuario`),
-  KEY `id_categoria` (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `proyecto`
---
+  `estado_proyecto` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `proyecto` (`id_proyecto`, `id_usuario`, `id_categoria`, `nombre_proyecto`, `detalle_proyecto`, `estado_proyecto`) VALUES
 (1, 2, 1, 'Instalación de Paneles Solares en Escuelas Rurales', 'Este proyecto busca implementar paneles solares en 10 escuelas rurales del país', 'En Progreso'),
@@ -195,23 +108,12 @@ INSERT INTO `proyecto` (`id_proyecto`, `id_usuario`, `id_categoria`, `nombre_pro
 (4, 5, 4, 'Capacitaciones en Escuelas', 'Charlas y talleres sobre sostenibilidad para estudiantes de primaria y secundaria', 'En Progreso'),
 (5, 2, 5, 'Voluntariado de Limpieza de Playas', 'Proyecto para organizar grupos de voluntarios que limpien playas en la costa', 'Completado');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `proyecto_imagenes`
---
-
+DROP TABLE IF EXISTS `proyecto_imagenes`;
 CREATE TABLE `proyecto_imagenes` (
-  `id_imagen` int(11) NOT NULL AUTO_INCREMENT,
+  `id_imagen` int(11) NOT NULL,
   `id_proyecto` int(11) NOT NULL,
-  `ruta_imagen` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_imagen`),
-  KEY `id_proyecto` (`id_proyecto`)
+  `ruta_imagen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `proyecto_imagenes`
---
 
 INSERT INTO `proyecto_imagenes` (`id_imagen`, `id_proyecto`, `ruta_imagen`) VALUES
 (1, 1, 'https://media.istockphoto.com/id/1467367215/es/foto/una-imagen-de-una-amplia-sala-de-clases.jpg?s=1024x1024&w=is&k=20&c=HkbWrfY-O9PhIH3D9vymNAW1Y8nxdTCz1qZ2ZCVSpGQ='),
@@ -235,26 +137,14 @@ INSERT INTO `proyecto_imagenes` (`id_imagen`, `id_proyecto`, `ruta_imagen`) VALU
 (19, 5, 'https://media.istockphoto.com/id/1023578222/es/foto/activistas-que-trabajan-juntos-haciendo-una-diferencia.jpg?s=612x612&w=0&k=20&c=o3BbkI53l2B4ntYugnhu873yHbf2ECcL1c76qY1Nef0='),
 (20, 5, 'https://media.istockphoto.com/id/1263087901/es/foto/limpieza-ambiental-una-mujer-playa-koh-lanta-tailandia.jpg?s=612x612&w=0&k=20&c=mVrOKAX7xd_bnNYkaQTQ-PUwRsBd-YTl_jyOgf_tuPs=');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `recursos`
---
-
 DROP TABLE IF EXISTS `recursos`;
-CREATE TABLE IF NOT EXISTS `recursos` (
-  `id_recurso` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `recursos` (
+  `id_recurso` int(11) NOT NULL,
   `id_categoria` int(11) DEFAULT NULL,
   `nombre_recurso` varchar(100) NOT NULL,
   `descripcion` text DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_recurso`),
-  KEY `id_categoria` (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `recurso`
---
+  `imagen` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `recursos` (`id_recurso`, `id_categoria`, `nombre_recurso`, `descripcion`, `imagen`) VALUES
 (1, 8, 'Paneles Solares', 'Guía completa sobre la instalación y mantenimiento de paneles solares\r\n\r\nIntroducción\r\nLos paneles solares convierten la luz del sol en electricidad, ofreciendo una fuente de energía limpia y sostenible. Esta guía te ayudará a entender cómo instalar y mantener tu sistema solar.\r\n\r\nTipos de Paneles Solares\r\nMonocristalinos: Alta eficiencia, mayor costo.\r\nPolicristalinos: Menor costo, eficiencia moderada.\r\nCapa Fina: Flexible y ligero, pero menos eficiente.\r\n\r\nInstalación\r\nEvaluación: Asegúrate de que el área tenga buena exposición al sol.\r\nCálculo de Energía: Revisa tus facturas eléctricas para dimensionar el sistema.\r\nPermisos: Verifica requisitos locales.\r\nPasos de Instalación\r\nMontaje de Estructuras: Fija las estructuras al techo o suelo.\r\nInstalación de Paneles: Coloca los paneles sobre las estructuras.\r\nCableado: Conecta los paneles al inversor y, si es necesario, a la red eléctrica.\r\nConfiguración: Ajusta el inversor y el medidor para monitorear la producción.\r\nMantenimiento\r\nLimpieza: Limpia los paneles una o dos veces al año.\r\nInspección Visual: Revisa los paneles y cables para detectar daños.\r\nMonitoreo: Usa aplicaciones para verificar el rendimiento del sistema.\r\nRevisión Profesional: Realiza una inspección anual para asegurar el funcionamiento óptimo.\r\n\r\nConclusión\r\nCon una instalación adecuada y un mantenimiento regular, los paneles solares pueden ofrecer energía limpia y ahorrar en tus facturas de electricidad durante más de 25 años.', 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Fixed_Tilt_Solar_panel_at_Canterbury_Municipal_Building_Canterbury_New_Hampshire.jpg'),
@@ -263,22 +153,11 @@ INSERT INTO `recursos` (`id_recurso`, `id_categoria`, `nombre_recurso`, `descrip
 (4, 9, 'Charlas Educativas', 'Accede a charlas y talleres sobre sostenibilidad ambiental\r\n\r\nIntroducción\r\nParticipar en charlas y talleres sobre sostenibilidad ambiental es una excelente manera de aprender más sobre prácticas ecológicas y cómo contribuir al cuidado del planeta. Esta guía te ayudará a encontrar y acceder a estos eventos educativos.\r\n\r\n¿Dónde Encontrar Charlas y Talleres?\r\nEventos Locales: Revisa la agenda de eventos de tu municipio o comunidad. A menudo, se organizan talleres en centros comunitarios o escuelas.\r\nOrganizaciones Ambientales: Muchas ONGs y grupos de conservación ofrecen charlas y talleres. Consulta sus sitios web o redes sociales.\r\nUniversidades y Centros de Investigación: Las instituciones académicas suelen organizar eventos educativos sobre sostenibilidad.\r\nPlataformas Online: Explora sitios web y aplicaciones dedicados a eventos educativos, como Eventbrite o Meetup, para encontrar talleres virtuales y presenciales.\r\n\r\nCómo Participar\r\nRegístrate con Anticipación: Asegúrate de inscribirte con anticipación para asegurar tu lugar en el evento.\r\nVerifica el Formato: Algunos talleres son presenciales, mientras que otros se realizan en línea. Asegúrate de conocer el formato y los requisitos.\r\nPrepárate: Investiga el tema del taller y prepara preguntas o temas de interés para aprovechar al máximo la experiencia.\r\n\r\nBeneficios de Participar\r\nConocimiento Actualizado: Obtén información actualizada sobre las últimas tendencias y prácticas en sostenibilidad ambiental.\r\nRed de Contactos: Conecta con profesionales y otros interesados en el tema, lo que puede abrir oportunidades para colaborar en proyectos.\r\nHabilidades Prácticas: Aprende técnicas y estrategias prácticas que puedes aplicar en tu vida diaria o en tu comunidad.\r\n\r\nConsejos Adicionales\r\nParticipa Activamente: Haz preguntas y participa en discusiones para obtener el mayor beneficio del taller.\r\nAplica lo Aprendido: Implementa las estrategias y conocimientos adquiridos en tu vida cotidiana o en proyectos comunitarios.\r\nComparte la Información: Difunde lo aprendido con amigos, familiares y colegas para promover prácticas sostenibles en tu entorno.\r\n\r\nConclusión\r\nAcceder a charlas y talleres sobre sostenibilidad ambiental te proporciona herramientas valiosas para contribuir al cuidado del medio ambiente. Aprovecha estas oportunidades para educarte y hacer una diferencia positiva en tu comunidad.', 'https://accionsocial.ucr.ac.cr/sites/default/files/noticia/imagenes-portada/2019-05/img_0472.jpg'),
 (5, 8, 'Voluntariados Activos', 'Únete a los proyectos de voluntariado en tu comunidad\r\n\r\nIntroducción\r\nParticipar en proyectos de voluntariado es una forma efectiva de contribuir al bienestar de tu comunidad y hacer una diferencia positiva. Esta guía te ayudará a encontrar y unirte a oportunidades de voluntariado en tu área.\r\n\r\n¿Dónde Encontrar Proyectos de Voluntariado?\r\nOrganizaciones Locales: Consulta con ONGs, centros comunitarios y asociaciones locales que suelen tener programas de voluntariado.\r\nRedes Sociales y Sitios Web: Plataformas como Facebook, LinkedIn y sitios web de voluntariado (como Idealist o VolunteerMatch) ofrecen listados de proyectos y oportunidades.\r\nEventos Comunitarios: Asiste a eventos locales para conocer a organizadores de proyectos y obtener información sobre oportunidades de voluntariado.\r\nInstituciones Educativas y Empresas: Muchas universidades y empresas tienen programas de voluntariado y pueden ofrecer oportunidades o recursos para involucrarte.\r\n\r\nCómo Unirte a un Proyecto\r\nInvestiga las Oportunidades: Examina las diferentes opciones disponibles y elige proyectos que se alineen con tus intereses y habilidades.\r\nContacta a los Organizadores: Ponte en contacto con las organizaciones para obtener más detalles sobre los proyectos y el proceso de inscripción.\r\nCompleta el Registro: Sigue el proceso de inscripción que te indiquen, que puede incluir formularios, entrevistas o capacitación previa.\r\nParticipa en la Capacitación: Si el proyecto requiere capacitación, asegúrate de asistir para estar bien preparado.\r\n\r\nBeneficios de Voluntariado\r\nImpacto Positivo: Contribuye al bienestar de tu comunidad y ayuda a resolver problemas locales.\r\nDesarrollo Personal: Adquiere nuevas habilidades, experiencias y perspectivas mientras trabajas en proyectos significativos.\r\nRed de Contactos: Conoce a personas con intereses similares y construye relaciones valiosas en tu comunidad.\r\n\r\nConsejos Adicionales\r\nCompromiso y Puntualidad: Sé puntual y cumple con los compromisos para maximizar tu impacto y mantener una buena relación con los organizadores.\r\nComunicación: Mantén una comunicación abierta con los coordinadores del proyecto para resolver dudas y adaptar tu participación si es necesario.\r\nComparte tu Experiencia: Anima a otros a unirse a proyectos de voluntariado y comparte tus experiencias para inspirar a más personas.\r\n\r\nConclusión\r\nUnirte a proyectos de voluntariado en tu comunidad no solo beneficia a quienes reciben tu ayuda, sino que también enriquece tu vida personal y profesional. Aprovecha estas oportunidades para hacer una diferencia y fortalecer tu conexión con tu entorno local.', 'https://educowebmedia.blob.core.windows.net/educowebmedia/educospain/media/images/blog/manos-voluntariado.jpg');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `rol`
---
-
 DROP TABLE IF EXISTS `rol`;
-CREATE TABLE IF NOT EXISTS `rol` (
-  `id_rol` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_rol` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `rol`
---
+CREATE TABLE `rol` (
+  `id_rol` int(11) NOT NULL,
+  `nombre_rol` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `rol` (`id_rol`, `nombre_rol`) VALUES
 (1, 'Administrador'),
@@ -287,27 +166,15 @@ INSERT INTO `rol` (`id_rol`, `nombre_rol`) VALUES
 (4, 'Editor'),
 (5, 'Voluntario');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `transportes`
---
-
 DROP TABLE IF EXISTS `transportes`;
-CREATE TABLE IF NOT EXISTS `transportes` (
-  `id_transporte` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `transportes` (
+  `id_transporte` int(11) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `nombre_transporte` varchar(100) NOT NULL,
   `ruta_transporte` varchar(255) DEFAULT NULL,
   `horario_transporte` varchar(100) DEFAULT NULL,
-  `precio_transporte` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`id_transporte`),
-  KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `transportes`
---
+  `precio_transporte` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `transportes` (`id_transporte`, `id_usuario`, `nombre_transporte`, `ruta_transporte`, `horario_transporte`, `precio_transporte`) VALUES
 (1, 2, 'Autobús Sostenible', 'Ruta A - Centro de la Ciudad a la Zona Verde', '06:00 - 18:00', 0.50),
@@ -316,85 +183,111 @@ INSERT INTO `transportes` (`id_transporte`, `id_usuario`, `nombre_transporte`, `
 (4, 5, 'Tren Solar', 'Ruta D - Suburbio al Centro de la Ciudad', '07:00 - 19:00', 1.00),
 (5, 2, 'Autobús de Biodiésel', 'Ruta E - Zona Rural a la Plaza Principal', '05:00 - 17:00', 0.75);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `usuario`
---
-
 DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE IF NOT EXISTS `usuario` (
-  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL,
   `id_rol` int(11) DEFAULT NULL,
   `nombre_usuario` varchar(100) NOT NULL,
   `apellido_usuario` varchar(100) NOT NULL,
   `correo` varchar(150) NOT NULL,
-  `contrasenia` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_usuario`),
-  KEY `id_rol` (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `usuario`
---
+  `contrasenia` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombre_usuario`, `apellido_usuario`, `correo`, `contrasenia`) VALUES
-(1, 1, 'admin', 'admin', 'admin@vidaazul.com', 'adminpass'),
-(2, 2, 'Sofia', 'Ramirez', 'sofia.ramirez@vidaazul.com', 'sofia123'),
-(3, 3, 'Luis', 'Hernandez', 'luis.hernandez@vidaazul.com', 'luis123'),
-(4, 4, 'Ana', 'Martinez', 'ana.martinez@vidaazul.com', 'ana123'),
-(5, 5, 'Carlos', 'Gonzalez', 'carlos.gonzalez@vidaazul.com', 'carlos123');
+(1, 1, 'admin', 'admin', 'admin@vidaazul.com', '$2y$10$gwzUSgtwUeJ.e.8sET9zteU5d04.Igp0b6a7cpBq4tSBYwgOD1A.W'),
+(2, 2, 'Sofia', 'Ramirez', 'sofia.ramirez@vidaazul.com', '$2y$10$4YIpnmngYqdD3AplDvsH9O4IFKV.DJmGJV.r.Y97BU61u9ZkUxSsC'),
+(3, 3, 'Luis', 'Hernandez', 'luis.hernandez@vidaazul.com', '$2y$10$i2b3SRx3vXawFr8PsWCheuwNQbDTBt8Gu1ueHh9MeE8IqPGlRUffG'),
+(4, 4, 'Ana', 'Martinez', 'ana.martinez@vidaazul.com', '$2y$10$lUHo5Ru0EEHD0lIJYh3rnOHTTyYO7i8HZABgC3hMqzF9mMVd9nEby'),
+(5, 5, 'Carlos', 'Gonzalez', 'carlos.gonzalez@vidaazul.com', '$2y$10$NQ7rd2mg6NQrB/5IGIO0leEaFkS6Qi3iTjMe4N50zOlLGTWgGy8ce');
 
---
--- Constraints for dumped tables
---
 
---
--- Constraints for table `comentario`
---
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`id_categoria`);
+
 ALTER TABLE `comentario`
-  ADD CONSTRAINT `comentario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+  ADD PRIMARY KEY (`id_comentario`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
---
--- Constraints for table `eventos`
---
+ALTER TABLE `eventos`
+  ADD PRIMARY KEY (`id_evento`),
+  ADD KEY `id_categoria` (`id_categoria`);
+
+ALTER TABLE `expertos`
+  ADD PRIMARY KEY (`id_experto`),
+  ADD KEY `id_categoria` (`id_categoria`);
+
+ALTER TABLE `galeria`
+  ADD PRIMARY KEY (`id_imagen`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+ALTER TABLE `proyecto`
+  ADD PRIMARY KEY (`id_proyecto`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_categoria` (`id_categoria`);
+
+ALTER TABLE `proyecto_imagenes`
+  ADD PRIMARY KEY (`id_imagen`),
+  ADD KEY `id_proyecto` (`id_proyecto`);
+
+ALTER TABLE `recursos`
+  ADD PRIMARY KEY (`id_recurso`),
+  ADD KEY `id_categoria` (`id_categoria`);
+
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id_rol`);
+
+ALTER TABLE `transportes`
+  ADD PRIMARY KEY (`id_transporte`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD KEY `id_rol` (`id_rol`);
+
+
+ALTER TABLE `categoria`
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+ALTER TABLE `comentario`
+  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `eventos`
+  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `expertos`
+  MODIFY `id_experto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `galeria`
+  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `proyecto`
+  MODIFY `id_proyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `proyecto_imagenes`
+  MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+ALTER TABLE `recursos`
+  MODIFY `id_recurso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `rol`
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `transportes`
+  MODIFY `id_transporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+
 ALTER TABLE `eventos`
   ADD CONSTRAINT `eventos_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
 
---
--- Constraints for table `expertos`
---
 ALTER TABLE `expertos`
   ADD CONSTRAINT `expertos_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
 
---
--- Constraints for table `galeria`
---
-ALTER TABLE `galeria`
-  ADD CONSTRAINT `galeria_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
-
---
--- Constraints for table `proyecto`
---
-ALTER TABLE `proyecto`
-  ADD CONSTRAINT `proyecto_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `proyecto_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
-
---
--- Constraints for table `recursos`
---
 ALTER TABLE `recursos`
   ADD CONSTRAINT `recurso_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`);
 
---
--- Constraints for table `transportes`
---
-ALTER TABLE `transportes`
-  ADD CONSTRAINT `transporte_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
-
---
--- Constraints for table `usuario`
---
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
 COMMIT;

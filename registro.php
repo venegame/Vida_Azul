@@ -16,7 +16,7 @@
 
     <?php
     // Crear conexión
-    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul","3307");
 
     // Verificar conexión
     if ($conexion->connect_error) {
@@ -33,6 +33,9 @@
         $apellido = $_POST['apellido'];
         $correo = $_POST['correo'];
         $contrasenia = $_POST['contrasenia'];
+
+        // Encriptar la contraseña
+        $contrasenia_hash = password_hash($contrasenia, PASSWORD_BCRYPT);
 
         // ID del rol de Usuario (asumimos que es 2, ajusta según tu base de datos)
         $id_rol_usuario = 2;
@@ -54,7 +57,7 @@
                         VALUES (?, ?, ?, ?, ?)";
 
                 if ($stmt = $conexion->prepare($sql)) {
-                    $stmt->bind_param("ssssi", $nombre, $apellido, $correo, $contrasenia, $id_rol_usuario);
+                    $stmt->bind_param("ssssi", $nombre, $apellido, $correo, $contrasenia_hash, $id_rol_usuario);
                     if ($stmt->execute()) {
                         $mensaje = "Registro exitoso. Puedes iniciar sesión ahora.";
                         $tipo_mensaje = "success";
@@ -127,7 +130,7 @@
                                 <input type="password" class="form-control" name="contrasenia" required />
                             </div>
 
-                            <a class="dropdown-item col text-center p-2" href="/iniciarsesion.php">Inicia Sesión</a>
+                            <a class="dropdown-item col text-center p-2" href="iniciarsesion.php">Inicia Sesión</a>
                         </div>
                         <div class="card-footer text-center">
                             <button type="submit" class="btn btn-success" id="submitBtn"
@@ -158,7 +161,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('navbar_cruds.php')
+            fetch('navbar.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

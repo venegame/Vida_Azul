@@ -6,7 +6,8 @@ $password = ""; // Cambiar si es necesario
 $database = "vida_azul";
 
 // Crear conexión
-$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul"
+);
 
 // Verificar conexión
 if ($conn->connect_error) {

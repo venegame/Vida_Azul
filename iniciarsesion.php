@@ -17,37 +17,44 @@ if ($conexion->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los valores del formulario
     $correo = $_POST['username'];
-    $contrasenia = $_POST['password'];
+    $contrasenia_ingresada = $_POST['password'];
 
     // Preparar la consulta para verificar el usuario
-    $sql = "SELECT id_usuario, nombre_usuario, id_rol FROM usuario WHERE correo = ? AND contrasenia = ?";
+    $sql = "SELECT id_usuario, nombre_usuario, id_rol, contrasenia FROM usuario WHERE correo = ?";
     
     if ($stmt = $conexion->prepare($sql)) {
-        $stmt->bind_param("ss", $correo, $contrasenia);
+        $stmt->bind_param("s", $correo);
         $stmt->execute();
         $stmt->store_result();
         
         if ($stmt->num_rows > 0) {
             // El usuario existe, obtener detalles
-            $stmt->bind_result($id_usuario, $nombre_usuario, $id_rol);
+            $stmt->bind_result($id_usuario, $nombre_usuario, $id_rol, $contrasenia);
             $stmt->fetch();
 
-            // Guardar detalles en la sesión
-            $_SESSION['id_usuario'] = $id_usuario;
-            $_SESSION['nombre_usuario'] = $nombre_usuario;
-            $_SESSION['id_rol'] = $id_rol;
+            // Verificar la contraseña
+            if (password_verify($contrasenia_ingresada, $contrasenia)) {
+                // Guardar detalles en la sesión
+                $_SESSION['id_usuario'] = $id_usuario;
+                $_SESSION['nombre_usuario'] = $nombre_usuario;
+                $_SESSION['id_rol'] = $id_rol;
 
-            // Redirigir según el rol
-            if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
-                header("Location: /proyecto/Proyecto/Vida_Azul/proyecto/listado.php");
+                // Redirigir según el rol
+                if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
+                    header("Location: /proyecto/Proyecto/Vida_Azul/proyecto/listado.php");
+                } else {
+                    header("Location: /proyecto/Proyecto/Vida_Azul/index.php");
+                }
+                exit();
             } else {
-                header("Location: /proyecto/Proyecto/Vida_Azul/index.php");
+                $mensaje = "Correo o contraseña incorrectos.";
+                $tipo_mensaje = "danger";
             }
-            exit();
         } else {
             $mensaje = "Correo o contraseña incorrectos.";
             $tipo_mensaje = "danger";
         }
+        $stmt->close();
     } else {
         $mensaje = "Error al preparar la consulta.";
         $tipo_mensaje = "danger";
@@ -58,7 +65,7 @@ $conexion->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">

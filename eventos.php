@@ -17,7 +17,7 @@
             <br>
             <div class="row">
                             <?php
-                            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul","3307");
+                            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
                             if ($conexion->connect_error) {
                                 die("Conexión fallida: " . $conexion->connect_error);
                             }
@@ -57,6 +57,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
+    <div class="p-4"> </div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;" class="col text-center text-white mt-auto p-1">
         <div class="container ">
             <div class="col">

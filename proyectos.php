@@ -6,7 +6,7 @@ $password = ""; // Cambiar si es necesario
 $database = "vida_azul";
 
 // Crear conexión
-$conn = new mysqli("localhost", "root", "", "vida_azul");
+$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
 // Verificar conexión
 if ($conn->connect_error) {
@@ -51,7 +51,7 @@ $proyectosConcluidos = $conn->query("SELECT * FROM proyecto WHERE estado_proyect
         <div class="projects-grid">
             <?php while($proyecto = $proyectosConcluidos->fetch_assoc()): ?>
                 <div class="project-card">
-                    <img src="https://lh3.googleusercontent.com/proxy/2BF9CmtTrn_gRDJ0fLuDQGWiuiG3TX90PXOassiZDTYKFnWK2sDvSGuozfjFLjlk5D-7zDHt0cjpdw7cpzDNR563iIRPRkh5hOWGJ7hN2QT6LUPqmfHFFsC-tQ_d633u6XCqMyggEJE" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
+                    <img src="https://blog.infoempleo.com/media/2021/12/TuEmpleo_Voluntariado-ONU-1-881x399.jpg" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
                     <div class="card-content">
                         <h3><?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?></h3>
                         <a href="proyectosDetalle.php?id=<?php echo $proyecto['id_proyecto']; ?>" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>

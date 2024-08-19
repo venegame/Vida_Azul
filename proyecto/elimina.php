@@ -18,7 +18,7 @@
     // Manejo de la solicitud de eliminación
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_proyecto'])) {
         $id_proyecto = $_POST['id_proyecto'];
-        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul","3307");
+        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
         if ($conexion->connect_error) {
             die("Conexión fallida: " . $conexion->connect_error);

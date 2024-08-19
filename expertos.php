@@ -20,14 +20,14 @@
             if ($conexion->connect_error) {
                 die("Conexión fallida: " . $conexion->connect_error);
             }
-            $sql = "SELECT id_experto, categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
+            $sql = "SELECT id_experto, id_categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     $id = $row['id_experto'];
-                    $categoria = $row['categoria'];
+                    $id_categoria = $row['id_categoria'];
                     $nombre_experto = $row['nombre_experto'];
                     $quienes_somos = $row['quienes_somos'];
                     $historia_expertos = $row['historia_expertos'];

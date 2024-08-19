@@ -38,14 +38,9 @@
             <br>
             <div class="row">
                 <?php
-                // Configuración de conexión a la base de datos
-                $host = 'localhost';
-                $usuario = 'vida_azul';
-                $contrasena = 'vidaazul';
-                $base_datos = 'vida_azul';
 
                 // Crear conexión
-                $conexion = new mysqli($host, $usuario, $contrasena, $base_datos, "3307");
+                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
                 // Verificar conexión
                 if ($conexion->connect_error) {

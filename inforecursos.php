@@ -33,18 +33,16 @@
             echo "No se encontro el ID de recurso.";
         }
     ?>
-    <div class="row align-items-center content">
-        <div class="col-lg-8">
-            <h2 class="card-title" name="nombre"><?php echo $nombre; ?></h2>
-            <br>
-            <p class="card-text" name="descripcion"><?php echo nl2br(htmlspecialchars($descripcion)); ?></p>
-            <br>
-            <a href="recursos.php" class="btnrecursos"> Regresar</a>
-        </div>
-        <div class="col-lg-2">
-            <img src="<?php echo $imagen; ?>" alt="Imagen del Recurso" width="250" height="200" name="imagen">
-        </div>
+    <div class="content-wrapper">
+    <div class="row align-items-center content" style="text-align: left;">
+        <h2 class="card-title" name="nombre"><?php echo $nombre; ?></h2>
+        <br>
+        <p class="card-text" name="descripcion"><?php echo nl2br(htmlspecialchars($descripcion)); ?></p>
     </div>
+    <img style="text-align: center;" src="<?php echo $imagen; ?>" alt="Imagen del Recurso" width="450" height="200" name="imagen">
+    <div class="p-4"> </div>
+    <a href="recursos.php" class="btnrecursos">Regresar</a>
+</div>
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {

@@ -6,7 +6,7 @@ $mensaje = '';
 $tipo_mensaje = '';
 
 // Crear conexión
-$conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul", "3307");
+$conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
 // Verificar conexión
 if ($conexion->connect_error) {

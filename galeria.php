@@ -21,7 +21,9 @@
                     if ($conexion->connect_error) {
                         die("Conexión fallida: " . $conexion->connect_error);
                     }
-                    $sql = "SELECT id_imagen, id_usuario, titulo_imagen, imagen_url FROM galeria";
+                    $sql = "SELECT g.id_imagen, g.id_usuario, g.titulo, g.imagen, u.nombre_usuario 
+                            FROM galeria g 
+                            INNER JOIN usuario u ON g.id_usuario = u.id_usuario";
                     $stmt = $conexion->prepare($sql);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -29,26 +31,26 @@
                         while($row = $result->fetch_assoc()) {
                             $id_imagen = $row['id_imagen'];
                             $id_usuario = $row['id_usuario'];
-                            $titulo_imagen = $row['titulo_imagen'];
-                            $imagen_url = $row['imagen_url'];
+                            $titulo = $row['titulo'];
+                            $imagen = $row['imagen'];
+                            $nombre_usuario = $row['nombre_usuario'];
                 ?>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4" data-user-id="<?php echo $id_usuario; ?>">
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                     <div class="gallery">
-                        <a target="_blank" href="<?php echo $imagen_url; ?>">
-                            <img src="<?php echo $imagen_url; ?>" alt="<?php echo $titulo_imagen; ?>" class="img-fluid">
+                        <a target="_blank" href="<?php echo $imagen; ?>">
+                            <img src="<?php echo $imagen; ?>" alt="<?php echo $titulo; ?>" class="img-fluid">
                         </a>
-                        <div class="desc"><?php echo $titulo_imagen; ?> (Usuario: <?php echo $id_usuario; ?>)</div>
+                        <div class="desc"><?php echo $titulo; ?> (Usuario: <?php echo htmlspecialchars($nombre_usuario); ?>)</div>
                     </div>
                  </div>
                  <?php
                         }
                     } else {
-                        echo "";
+                        echo "<p>No se encontraron proyectos.</p>";
                     }
                     $stmt->close();
                     $conexion->close();
                 ?>
-
             </div>
             <div class="clearfix"></div>
             <div style="padding:6px;">
@@ -56,9 +58,9 @@
             </div>
         </div>
     </div>
-
+    <div class="p-4"></div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;" class="col text-center text-white mt-auto p-1">
-        <div class="container ">
+        <div class="container">
             <div class="col">
                 <p style="color: white;">&COPY;Vida Azul Derechos Reservados 2024</p>
             </div>

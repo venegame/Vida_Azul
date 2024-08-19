@@ -73,15 +73,37 @@
   background-color: #217C61;
   color: whitesmoke;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 15px;
   text-decoration: none;
   display: inline-block; 
+  font-size: 14px;
+  border-radius: 4px;
+  position: fixed;
+  left: 15px; 
+  bottom: 15px;
+  width: auto;
+  max-width: 200px;
 }
 
 .btnrecursos:hover {
   background-color: #217C61;
   color: whitesmoke;
 }
+
+.content-wrapper {
+  text-align: center; /* Centra el texto y el contenido dentro del contenedor */
+  margin: 0 auto; /* Centra el contenedor en la pantalla */
+}
+
+.image-container {
+  display: flex; /* Usa flexbox para centrar la imagen */
+  justify-content: center; /* Centra la imagen horizontalmente dentro del contenedor */
+}
+
+.centered-image {
+  display: block; /* Hace que la imagen se comporte como un bloque */
+}
+
 
 --------------------------------------Galeria-------------------------------------
 div.gallery {

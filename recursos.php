@@ -19,8 +19,8 @@
                     <select class="form-select" name="filtrocategoria" onchange="this.form.submit()">
                         <option selected>Seleccionar filtro</option>
                         <option value="">Todos</option>
-                        <option value="Articulo">Artículos</option>
-                        <option value="Curso">Cursos</option>
+                        <option value="8">Artículos</option>
+                        <option value="9">Cursos</option>
                     </select>
                     <button class="btn" type="button">
                         <i class="bi bi-funnel-fill" style="color: white;"></i>
@@ -36,10 +36,10 @@
         }
         $filtrocategoria = isset($_GET['filtrocategoria']) ? $_GET['filtrocategoria'] : '';
         if ($filtrocategoria == NULL) {
-            $sql = "SELECT id_recurso, nombre_recurso, categoria, descripcion, imagen FROM recursos";
+            $sql = "SELECT id_recurso, nombre_recurso, descripcion, imagen FROM recursos";
             $stmt = $conexion->prepare($sql);
         } else {
-            $sql = "SELECT id_recurso, nombre_recurso, categoria, descripcion, imagen FROM recursos WHERE categoria = ?";
+            $sql = "SELECT id_recurso, nombre_recurso, descripcion, imagen FROM recursos WHERE id_categoria = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("s", $filtrocategoria);
         }

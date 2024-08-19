@@ -16,70 +16,6 @@
             <h5>Proyectos concluidos por nuestra comunidad y usuarios participando y formando parte de cada una de nuestras experiencias.</h5>
             <br>
             <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/359823697_644929064334975_7103718428630239311_n.jpg">
-                            <img src="a_Images/359823697_644929064334975_7103718428630239311_n.jpg" alt="Cinque Terre" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/LIPIC2017062.jpg">
-                            <img src="a_Images/LIPIC2017062.jpg" alt="Forest" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/DSCN0944.jpg">
-                            <img src="a_Images/DSCN0944.jpg" alt="Northern Lights" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/siembradearboles_TDCX8006.jpg">
-                            <img src="a_Images/siembradearboles_TDCX8006.jpg" alt="Mountains" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/beach_cleaning.jpg">
-                            <img src="a_Images/beach_cleaning.jpg" alt="Cinque Terre" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/368247914_685115020310273_7803577051522363633_n.jpg">
-                            <img src="a_Images/368247914_685115020310273_7803577051522363633_n.jpg" alt="Cinque Terre" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/Jornada-de-limpieza-Rio-Torres--scaled.jpg">
-                            <img src="a_Images/Jornada-de-limpieza-Rio-Torres--scaled.jpg" alt="Cinque Terre" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-                    <div class="gallery">
-                        <a target="_blank" href="a_Images/la-poma.jpg">
-                            <img src="a_Images/la-poma.jpg" alt="Cinque Terre" class="img-fluid">
-                        </a>
-                        <div class="desc">Add a description of the image here</div>
-                    </div>
-                </div>
                 <?php
                     $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
                     if ($conexion->connect_error) {
@@ -116,7 +52,7 @@
             </div>
             <div class="clearfix"></div>
             <div style="padding:6px;">
-                <p>This example uses media queries to re-arrange the images on different screen sizes: for screens larger than 700px wide, it will show four images side by side, for screens smaller than 700px, it will show two images side by side. For screens smaller than 500px, the images will stack vertically (100%).</p>
+                <p>¡Gracias por tu valiosa colaboración en los servicios de limpieza del medio ambiente! Tu compromiso y dedicación marcan una gran diferencia en la preservación de nuestro planeta. Juntos, estamos creando un futuro más limpio y saludable para todos. ¡Apreciamos profundamente tu esfuerzo y espíritu solidario!</p>
             </div>
         </div>
     </div>

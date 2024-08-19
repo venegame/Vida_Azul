@@ -19,7 +19,7 @@
         <div class="container">
             <h3 class="my-3" id="titulo">Proyectos</h3>
 
-            <a href="nuevo.html" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
+            <a href="nuevo.php" class="btn" style="background-color: #217C61; color: white;">Agregar</a>
 
             <table class="table table-hover table-bordered my-3" aria-describedby="titulo">
                 <thead style="background-color: #112A26; color: white;">
@@ -33,25 +33,50 @@
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
+                <?php
+                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul", "3307");
+                if ($conexion->connect_error) {
+                    die("Conexión fallida: " . $conexion->connect_error);
+                }
+                $sql = "SELECT p.id_proyecto, p.nombre_proyecto, u.nombre_usuario AS usuario, c.nombre_categoria AS categoria, p.detalle_proyecto, p.estado_proyecto 
+        FROM proyecto p
+        JOIN usuario u ON p.id_usuario = u.id_usuario
+        JOIN categoria c ON p.id_categoria = c.id_categoria";
+                $result = $conexion->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $id = $row['id_proyecto'];
+                        $usuario = $row['usuario'];
+                        $categoria = $row['categoria'];
+                        $nombre = $row['nombre_proyecto'];
+                        $detalle = $row['detalle_proyecto'];
+                        $estado = $row['estado_proyecto'];
+                        ?>
+                        <tbody>
+                            <tr>
+                                <td name="id"><?php echo $id; ?></td>
+                                <td name="usuario"><?php echo $usuario; ?></td>
+                                <td name="categoria"><?php echo $categoria; ?></td>
+                                <td name="nombre"><?php echo $nombre; ?></td>
+                                <td name="detalle"><?php echo $detalle; ?></td>
+                                <td name="estado"><?php echo $estado; ?></td>
+                                <td style="display: flex; align-items: center;">
+                                    <a href="edita.php?id=<?php echo $id; ?>" class="btn btn-sm me-2"
+                                        style="background-color: #94C132; color: white;">Editar</a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#eliminaModal" data-bs-id="<?php echo $id; ?>">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <?php
+                    }
+                } else {
+                    echo "No se encontraron proyectos, por favor intente nuevamente.";
+                }
+                $conexion->close();
+                ?>
 
-                <tbody>
-                    <tr>
-                        <td>123</td>
-                        <td>JUAN PEREZ</td>
-                        <td>Tecnología</td>
-                        <td>Proyecto A</td>
-                        <td>Detalles del proyecto A</td>
-                        <td>En Progreso</td>
-                        <td>
-                            <a href="edita.html" class="btn btn-sm me-2"
-                                style="background-color: #94C132; color: white;">Editar</a>
 
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#eliminaModal" data-bs-id="1">Eliminar</button>
-                        </td>
-                    </tr>
-
-                </tbody>
             </table>
         </div>
     </main>
@@ -104,7 +129,7 @@
 
                 // Update the modal's content.
                 const form = eliminaModal.querySelector('#form-elimina')
-                form.setAttribute('action', 'elimina.html?id=' + id)
+                form.setAttribute('action', 'elimina.php?id=' + id)
             })
         }
     </script>
@@ -112,7 +137,7 @@
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../navbar_cruds.html')
+            fetch('../navbar_cruds.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

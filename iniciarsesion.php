@@ -6,12 +6,7 @@ $mensaje = '';
 $tipo_mensaje = '';
 
 // Crear conexión
-$conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-
-// Verificar conexión
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
+include 'conexion.php';
 
 // Verificar si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

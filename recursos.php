@@ -30,10 +30,8 @@
         </nav>
     </div>
     <?php
-        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-        if ($conexion->connect_error) {
-            die("Conexión fallida: " . $conexion->connect_error);
-        }
+       include 'conexion.php';
+
         $filtrocategoria = isset($_GET['filtrocategoria']) ? $_GET['filtrocategoria'] : '';
         if ($filtrocategoria == NULL) {
             $sql = "SELECT id_recurso, nombre_recurso, descripcion, imagen FROM recursos";

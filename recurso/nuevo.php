@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" class="h-100">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="../styles.css" rel="stylesheet">
 </head>
+
 <body class="d-flex flex-column h-100">
     <div id="navbar-placeholder"></div>
     <main class="flex-shrink-0">
@@ -23,10 +25,8 @@
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <select class="form-select" id="id_categoria" name="id_categoria" required>
                         <?php
-                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                        if ($conexion->connect_error) {
-                            die("Conexión fallida: " . $conexion->connect_error);
-                        }
+                        include '../conexion.php';
+
                         // Obtener las categorías de la base de datos
                         $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
                         while ($row = $result->fetch_assoc()) {
@@ -50,27 +50,27 @@
             </form>
         </div>
         <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $nombre_recurso = $_POST['nombre_recurso'];
-                $id_categoria = $_POST['id_categoria'];
-                $descripcion = $_POST['descripcion'];
-                $imagen = $_POST['imagen'];
-                $sql = "INSERT INTO recursos (nombre_recurso, id_categoria, descripcion, imagen) VALUES (?, ?, ?, ?)";
-                $stmt = $conexion->prepare($sql);
-                $stmt->bind_param("ssss", $nombre_recurso, $id_categoria, $descripcion, $imagen);
-                if ($stmt->execute()) {
-                    echo "<script>
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nombre_recurso = $_POST['nombre_recurso'];
+            $id_categoria = $_POST['id_categoria'];
+            $descripcion = $_POST['descripcion'];
+            $imagen = $_POST['imagen'];
+            $sql = "INSERT INTO recursos (nombre_recurso, id_categoria, descripcion, imagen) VALUES (?, ?, ?, ?)";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("ssss", $nombre_recurso, $id_categoria, $descripcion, $imagen);
+            if ($stmt->execute()) {
+                echo "<script>
                             window.addEventListener('load', function() {
                                 var myModal = new bootstrap.Modal(document.getElementById('successModal'));
                                 myModal.show();
                             });
                           </script>";
-                } else {
-                    echo "Error ingresando registro: " . $stmt->error;
-                }
-                $stmt->close();
-                $conexion->close();
+            } else {
+                echo "Error ingresando registro: " . $stmt->error;
             }
+            $stmt->close();
+            $conexion->close();
+        }
         ?>
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -112,4 +112,5 @@
         });
     </script>
 </body>
+
 </html>

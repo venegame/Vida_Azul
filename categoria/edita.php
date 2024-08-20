@@ -21,13 +21,7 @@
 
             <?php
             //Conexión a la base de datos
-            $conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-
-
-            // Verificar la conexión
-            if ($conn->connect_error) {
-                die("La conexión falló: " . $conn->connect_error);
-            }
+            include '../conexion.php';
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Obtener los datos del formulario
@@ -39,16 +33,16 @@
                     echo '<div class="alert alert-warning" role="alert">Por favor, complete todos los campos.</div>';
                 } else {
                     // Escapar los datos para evitar SQL Injection
-                    $id_categoria = $conn->real_escape_string($id_categoria);
-                    $nombre_categoria = $conn->real_escape_string($nombre_categoria);
+                    $id_categoria = $conexion->real_escape_string($id_categoria);
+                    $nombre_categoria = $conexion->real_escape_string($nombre_categoria);
 
                     // Actualizar los datos en la base de datos
                     $sql = "UPDATE categoria SET nombre_categoria = '$nombre_categoria' WHERE id_categoria = '$id_categoria'";
 
-                    if ($conn->query($sql) === TRUE) {
+                    if ($conexion->query($sql) === TRUE) {
                         echo '<div class="alert alert-success" role="alert">Categoría actualizada con éxito.</div>';
                     } else {
-                        echo '<div class="alert alert-danger" role="alert">Error: ' . $conn->error . '</div>';
+                        echo '<div class="alert alert-danger" role="alert">Error: ' . $conexion->error . '</div>';
                     }
                 }
             } else if (isset($_GET['id'])) {
@@ -60,11 +54,11 @@
                     echo '<div class="alert alert-warning" role="alert">ID de categoría no proporcionado.</div>';
                 } else {
                     // Escapar el ID para evitar SQL Injection
-                    $id_categoria = $conn->real_escape_string($id_categoria);
+                    $id_categoria = $conexion->real_escape_string($id_categoria);
 
                     // Obtener los datos actuales de la categoría
                     $sql = "SELECT * FROM categoria WHERE id_categoria = '$id_categoria'";
-                    $result = $conn->query($sql);
+                    $result = $conexion->query($sql);
 
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
@@ -75,7 +69,7 @@
                 }
             }
 
-            $conn->close();
+            $conexion->close();
             ?>
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="row g-3" method="post" autocomplete="off">

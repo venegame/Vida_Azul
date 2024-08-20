@@ -19,12 +19,8 @@
         <div class="container">
             <?php
             // Crear conexión
-            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+            include '../conexion.php';
 
-            // Verificar conexión
-            if ($conexion->connect_error) {
-                die("Error de conexión: " . $conexion->connect_error);
-            }
 
             $mensaje = '';
             $tipo_mensaje = '';

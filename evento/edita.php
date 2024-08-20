@@ -16,10 +16,8 @@
     <?php
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-            if ($conexion->connect_error) {
-                die("Conexión fallida: " . $conexion->connect_error);
-            }
+            include '../conexion.php';
+
             $sql = "SELECT id_evento, nombre_evento, descripcion, imagen, fecha_evento, id_categoria FROM eventos WHERE id_evento = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("i", $id);
@@ -48,11 +46,8 @@
             $imagen = $_POST['imagen'];
             $fecha_evento = $_POST['fecha_evento'];
             $id_categoria = $_POST['id_categoria'];
-            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+            include '../conexion.php';
 
-            if ($conexion->connect_error) {
-                die("Conexión fallida: " . $conexion->connect_error);
-            }
 
             $sql = "UPDATE eventos SET nombre_evento = ?, descripcion = ?, imagen = ?, fecha_evento = ?, id_categoria = ? WHERE id_evento = ?";
             $stmt = $conexion->prepare($sql);
@@ -108,10 +103,8 @@
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <select class="form-select" id="id_categoria" name="id_categoria" required>
                         <?php
-                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                        if ($conexion->connect_error) {
-                            die("Conexión fallida: " . $conexion->connect_error);
-                        }
+            include '../conexion.php';
+
                         // Obtener las categorías de la base de datos
                         $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
                         while ($row = $result->fetch_assoc()) {

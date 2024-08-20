@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand py-3" href="index.php"><strong>Vida Azul</strong></a>
+        <a class="navbar-brand py-3" href="../index_crud.php"><strong>Vida Azul</strong></a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">

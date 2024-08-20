@@ -34,10 +34,8 @@
                     </tr>
                 </thead>
                 <?php
-                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                if ($conexion->connect_error) {
-                    die("Conexión fallida: " . $conexion->connect_error);
-                }
+            include '../conexion.php';
+
                 $sql = "SELECT p.id_proyecto, p.nombre_proyecto, u.nombre_usuario AS usuario, c.nombre_categoria AS categoria, p.detalle_proyecto, p.estado_proyecto 
         FROM proyecto p
         JOIN usuario u ON p.id_usuario = u.id_usuario

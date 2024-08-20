@@ -18,11 +18,8 @@
                 if (isset($_GET['id'])) {
                     $id_imagen = intval($_GET['id']);
 
-                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+                    include '../conexion.php';
 
-                    if ($conexion->connect_error) {
-                        die("Conexión fallida: " . $conexion->connect_error);
-                    }
 
                     $sql = "DELETE FROM galeria WHERE id_imagen = ?";
                     $stmt = $conexion->prepare($sql);

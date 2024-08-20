@@ -8,12 +8,7 @@ if (!isset($_SESSION['nombre_usuario'])) {
 }
 
 // Crear conexión
-$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión a la base de datos falló: " . $conn->connect_error);
-}
+include 'conexion.php';
 
 // Inicializar variables para evitar errores de "undefined array key"
 $nombre = $_SESSION['nombre_usuario'];
@@ -27,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comentario'])) {
         $fechaComentario = date('Y-m-d H:i:s');
 
         // Obtener el id_usuario basado en el nombre
-        $stmt = $conn->prepare("SELECT id_usuario FROM usuario WHERE nombre_usuario = ?");
+        $stmt = $conexion->prepare("SELECT id_usuario FROM usuario WHERE nombre_usuario = ?");
         $stmt->bind_param("s", $nombre);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -41,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comentario'])) {
 
         $stmt->close();
 
-        $stmt = $conn->prepare("INSERT INTO comentario (id_usuario, fecha_comentario, comentario) VALUES (?, ?, ?)");
+        $stmt = $conexion->prepare("INSERT INTO comentario (id_usuario, fecha_comentario, comentario) VALUES (?, ?, ?)");
         $stmt->bind_param("iss", $id_usuario, $fechaComentario, $comentario);
 
         if ($stmt->execute()) {
@@ -58,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comentario'])) {
 }
 
 // Obtener todos los comentarios para mostrar
-$comentarios = $conn->query("SELECT comentario.id_comentario, usuario.nombre_usuario, comentario.fecha_comentario, comentario.comentario FROM comentario LEFT JOIN usuario ON comentario.id_usuario = usuario.id_usuario ORDER BY comentario.fecha_comentario DESC");
+$comentarios = $conexion->query("SELECT comentario.id_comentario, usuario.nombre_usuario, comentario.fecha_comentario, comentario.comentario FROM comentario LEFT JOIN usuario ON comentario.id_usuario = usuario.id_usuario ORDER BY comentario.fecha_comentario DESC");
 ?>
 
 <!DOCTYPE html>
@@ -169,5 +164,5 @@ $comentarios = $conn->query("SELECT comentario.id_comentario, usuario.nombre_usu
 
 <?php
 // Cerrar conexión
-$conn->close();
+$conexion->close();
 ?>

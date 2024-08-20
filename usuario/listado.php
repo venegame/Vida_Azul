@@ -42,12 +42,8 @@
                     $base_datos = 'vida_azul';
 
                     // Crear conexión
-                    $conexion = new mysqli($host, $usuario, $contrasena, $base_datos);
+                    include '../conexion.php';
 
-                    // Verificar conexión
-                    if ($conexion->connect_error) {
-                        die("Error de conexión: " . $conexion->connect_error);
-                    }
 
                     // Consultar todos los usuarios
                     $sql = "SELECT u.id_usuario, u.nombre_usuario, u.apellido_usuario, u.correo, u.contrasenia, r.nombre_rol

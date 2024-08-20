@@ -28,7 +28,21 @@
 
                 <div class="col-md-4">
                     <label for="id_usuario" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" id="id_usuario" name="id_usuario" required>
+                    <select class="form-select" id="id_usuario" name="id_usuario" required>
+                        <option value="" disabled selected>Selecciona un usuario</option>
+                        <?php
+                            include '../conexion.php';
+
+                            $sql = "SELECT id_usuario, nombre_usuario FROM usuario";
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['id_usuario'] . "'>" . $row['nombre_usuario'] . "</option>";
+                            }
+
+                            $conexion->close();
+                        ?>
+                    </select>
                 </div>
 
                 <div class="col-md-4">
@@ -55,10 +69,8 @@
                 $id_usuario = $_POST['id_usuario'];
                 $titulo = $_POST['titulo'];
                 $imagen = $_POST['imagen'];
-                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                if ($conexion->connect_error) {
-                    die("Conexión fallida: " . $conexion->connect_error);
-                }
+                include '../conexion.php';
+
                 $sql = "INSERT INTO galeria (id_imagen, id_usuario, titulo, imagen) VALUES (?, ?, ?, ?)";
                 $stmt = $conexion->prepare($sql);
                 $stmt->bind_param("ssss", $id_imagen, $id_usuario, $titulo, $imagen);
@@ -80,7 +92,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">Operacion exitosa</h5>
+                        <h5 class="modal-title" id="successModalLabel">Operación exitosa</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -107,7 +119,6 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script>
-
         document.addEventListener("DOMContentLoaded", function () {
             fetch('../navbar_cruds.php')
                 .then(response => response.text())

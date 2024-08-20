@@ -51,10 +51,8 @@
                     <select class="form-select" id="id_rol" name="id_rol" required>
                         <?php
                         // Conexión a la base de datos
-                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                        if ($conexion->connect_error) {
-                            die("Conexión fallida: " . $conexion->connect_error);
-                        }
+                        include '../conexion.php';
+
 
                         // Obtener los roles de la base de datos
                         $result = $conexion->query("SELECT id_rol, nombre_rol FROM rol");

@@ -16,10 +16,8 @@
     <div class="container container-fluid p-0">
         <br>
         <?php
-            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-            if ($conexion->connect_error) {
-                die("Conexión fallida: " . $conexion->connect_error);
-            }
+            include 'conexion.php';
+
             $sql = "SELECT id_experto, id_categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
             $stmt = $conexion->prepare($sql);
             $stmt->execute();

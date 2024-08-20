@@ -32,12 +32,7 @@
                 <tbody>
                     <?php
                     // Crear conexión
-                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-
-                    // Verificar conexión
-                    if ($conexion->connect_error) {
-                        die("Error de conexión: " . $conexion->connect_error);
-                    }
+                    include '../conexion.php';
 
                     // Consultar roles
                     $sql = "SELECT id_rol, nombre_rol FROM rol";

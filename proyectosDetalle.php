@@ -1,18 +1,14 @@
 <?php
 
 // Crear conexión
-$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+include 'conexion.php';
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión a la base de datos falló: " . $conn->connect_error);
-}
 
 // Obtener el ID del proyecto desde la URL
 $id_proyecto = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 // Obtener los detalles del proyecto
-$stmt = $conn->prepare("SELECT p.*, u.nombre_usuario, u.apellido_usuario, c.nombre_categoria 
+$stmt = $conexion->prepare("SELECT p.*, u.nombre_usuario, u.apellido_usuario, c.nombre_categoria 
                         FROM proyecto p
                         LEFT JOIN usuario u ON p.id_usuario = u.id_usuario
                         LEFT JOIN categoria c ON p.id_categoria = c.id_categoria
@@ -29,7 +25,7 @@ if (!$proyecto) {
 $stmt->close();
 
 // Obtener las imágenes del proyecto
-$stmt = $conn->prepare("SELECT ruta_imagen FROM proyecto_imagenes WHERE id_proyecto = ?");
+$stmt = $conexion->prepare("SELECT ruta_imagen FROM proyecto_imagenes WHERE id_proyecto = ?");
 $stmt->bind_param("i", $id_proyecto);
 $stmt->execute();
 $imagenes_result = $stmt->get_result();
@@ -112,5 +108,5 @@ $stmt->close();
 
 <?php
 // Cerrar la conexión a la base de datos
-$conn->close();
+$conexion->close();
 ?>

@@ -13,10 +13,8 @@
     <?php
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-            if ($conexion->connect_error) {
-                die("Conexión fallida: " . $conexion->connect_error);
-            }
+            include 'conexion.php';
+
             $sql = "SELECT nombre_recurso, descripcion, imagen FROM recursos WHERE id_recurso = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("i", $id);

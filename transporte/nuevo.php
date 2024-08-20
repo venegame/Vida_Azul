@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="../styles.css" rel="stylesheet">
 </head>
+
 <body class="d-flex flex-column h-100">
     <div id="navbar-placeholder"></div>
     <main class="flex-shrink-0">
@@ -18,7 +19,25 @@
             <form action="#" class="row g-3" method="post" autocomplete="off">
                 <div class="col-md-6">
                     <label for="id_usuario" class="form-label">ID Usuario</label>
-                    <input type="text" class="form-control" id="id_usuario" name="id_usuario" required>
+                    <select class="form-select" id="id_usuario" name="id_usuario" required>
+                        <option value="" selected>Selecciona un usuario</option>
+                        <?php
+                        include '../conexion.php';
+                        
+                        $sql = "SELECT id_usuario, nombre_usuario FROM usuario";
+                        $result = $conexion->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option value=\"" . htmlspecialchars($row['id_usuario']) . "\">" . htmlspecialchars($row['nombre_usuario']) . "</option>";
+                            }
+                        } else {
+                            echo "<option value=\"\">No hay usuarios disponibles</option>";
+                        }
+
+                        $conexion->close();
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label for="nombre_transporte" class="form-label">Nombre Transporte</label>
@@ -42,39 +61,39 @@
                 </div>
             </form>
         </div>
+
         <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $id_usuario = $_POST['id_usuario'];
-                $nombre_transporte = $_POST['nombre_transporte'];
-                $ruta_transporte = $_POST['ruta_transporte'];
-                $horario_transporte = $_POST['horario_transporte'];
-                $precio_transporte = $_POST['precio_transporte'];
-                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                if ($conexion->connect_error) {
-                    die("Conexión fallida: " . $conexion->connect_error);
-                }
-                $sql = "INSERT INTO transportes (id_usuario, nombre_transporte, ruta_transporte, horario_transporte, precio_transporte) VALUES (?, ?, ?, ?, ?)";
-                $stmt = $conexion->prepare($sql);
-                $stmt->bind_param("sssss", $id_usuario, $nombre_transporte, $ruta_transporte, $horario_transporte, $precio_transporte);
-                if ($stmt->execute()) {
-                    echo "<script>
-                            window.addEventListener('load', function() {
-                                var myModal = new bootstrap.Modal(document.getElementById('successModal'));
-                                myModal.show();
-                            });
-                          </script>";
-                } else {
-                    echo "Error ingresando registro: " . $stmt->error;
-                }
-                $stmt->close();
-                $conexion->close();
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $id_usuario = $_POST['id_usuario'];
+            $nombre_transporte = $_POST['nombre_transporte'];
+            $ruta_transporte = $_POST['ruta_transporte'];
+            $horario_transporte = $_POST['horario_transporte'];
+            $precio_transporte = $_POST['precio_transporte'];
+            include '../conexion.php';
+
+            $sql = "INSERT INTO transportes (id_usuario, nombre_transporte, ruta_transporte, horario_transporte, precio_transporte) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("sssss", $id_usuario, $nombre_transporte, $ruta_transporte, $horario_transporte, $precio_transporte);
+            if ($stmt->execute()) {
+                echo "<script>
+                        window.addEventListener('load', function() {
+                            var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                            myModal.show();
+                        });
+                      </script>";
+            } else {
+                echo "Error ingresando registro: " . $stmt->error;
             }
+            $stmt->close();
+            $conexion->close();
+        }
         ?>
+
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">Operacion exitosa</h5>
+                        <h5 class="modal-title" id="successModalLabel">Operación exitosa</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -87,19 +106,22 @@
             </div>
         </div>
     </main>
-    <div class="p-4"> </div>
+    
+    <div class="p-4"></div>
+    
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
-        <div class="container ">
+        <div class="container">
             <div class="col">
                 <p style="color: white;">&COPY;Vida Azul Derechos Reservados 2024</p>
             </div>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             fetch('../navbar_cruds.php')
                 .then(response => response.text())
@@ -110,4 +132,5 @@
         });
     </script>
 </body>
+
 </html>

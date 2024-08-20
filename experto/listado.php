@@ -10,6 +10,7 @@
     <link href="../styles.css" rel="stylesheet">
     <title>Vida azul</title>
 </head>
+
 <body>
     <div id="navbar-placeholder"></div>
     <main class="flex-shrink-0">
@@ -29,44 +30,45 @@
                     </tr>
                 </thead>
                 <?php
-                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                    if ($conexion->connect_error) {
-                        die("Conexión fallida: " . $conexion->connect_error);
+                include '../conexion.php';
+
+                $sql = "SELECT id_experto, id_categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
+                $result = $conexion->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $id = $row['id_experto'];
+                        $id_categoria = $row['id_categoria'];
+                        $nombre = $row['nombre_experto'];
+                        $quienes_somos = $row['quienes_somos'];
+                        $historia_expertos = $row['historia_expertos'];
+                        $url_instagram = $row['url_instagram'];
+                        $url_x = $row['url_x'];
+                        $url_youtube = $row['url_youtube'];
+                        $url_facebook = $row['url_facebook'];
+                        ?>
+                        <tbody>
+                            <tr>
+                                <td name="id" class="truncateless"><?php echo $id; ?></td>
+                                <td name="id_categoria" class="truncateless"><?php echo $id_categoria; ?></td>
+                                <td name="nombre" class="truncateless"><?php echo $nombre; ?></td>
+                                <td name="quienes_somos" class="truncateless"><?php echo $quienes_somos; ?></td>
+                                <td name="historia_expertos" class="truncateless"><?php echo $historia_expertos; ?></td>
+                                <td name="Links" class="truncateless"><?php echo $url_instagram; ?> <br> <?php echo $url_x; ?>
+                                    <br> <?php echo $url_youtube; ?> <br> <?php echo $url_facebook; ?></td>
+                                <td style="display: flex; align-items: center;">
+                                    <a href="edita.php?id=<?php echo $id; ?>" class="btn btn-sm me-2"
+                                        style="background-color: #94C132; color: white;">Editar</a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#eliminaModal" data-bs-id="<?php echo $id; ?>">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <?php
                     }
-                    $sql = "SELECT id_experto, id_categoria, nombre_experto, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook  FROM expertos";
-                    $result = $conexion->query($sql);
-                    if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            $id = $row['id_experto'];
-                            $id_categoria = $row['id_categoria'];
-                            $nombre = $row['nombre_experto'];
-                            $quienes_somos = $row['quienes_somos'];
-                            $historia_expertos = $row['historia_expertos'];
-                            $url_instagram = $row['url_instagram'];
-                            $url_x = $row['url_x'];
-                            $url_youtube = $row['url_youtube'];
-                            $url_facebook = $row['url_facebook'];
-                ?>
-                <tbody>
-                    <tr>
-                        <td name="id" class="truncateless"><?php echo $id; ?></td>
-                        <td name="id_categoria" class="truncateless"><?php echo $id_categoria; ?></td>
-                        <td name="nombre" class="truncateless"><?php echo $nombre; ?></td>
-                        <td name="quienes_somos" class="truncateless"><?php echo $quienes_somos; ?></td>
-                        <td name="historia_expertos" class="truncateless"><?php echo $historia_expertos; ?></td>
-                        <td name="Links" class="truncateless"><?php echo $url_instagram; ?> <br> <?php echo $url_x; ?> <br> <?php echo $url_youtube; ?> <br> <?php echo $url_facebook; ?></td>
-                        <td style="display: flex; align-items: center;">
-                            <a href="edita.php?id=<?php echo $id; ?>" class="btn btn-sm me-2"style="background-color: #94C132; color: white;">Editar</a>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?php echo $id; ?>">Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
-                <?php
-                        }
-                    } else {
-                        echo "No se encontraron expertos, por favor intente nuevamente.";
-                    }
-                    $conexion->close();
+                } else {
+                    echo "No se encontraron expertos, por favor intente nuevamente.";
+                }
+                $conexion->close();
                 ?>
             </table>
         </div>
@@ -101,9 +103,8 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous">
-    </script>
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             fetch('../navbar_cruds.php')
@@ -124,4 +125,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -15,10 +15,8 @@
         <br>
             <div class="content">
                 <?php
-                    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                    if ($conexion->connect_error) {
-                        die("Conexión fallida: " . $conexion->connect_error);
-                    }
+                    include 'conexion.php';
+
                     $sql = "SELECT id_transporte, id_usuario, nombre_transporte, ruta_transporte, horario_transporte, precio_transporte FROM transportes";
                     $stmt = $conexion->prepare($sql);
                     $stmt->execute();

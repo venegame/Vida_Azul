@@ -23,12 +23,7 @@
             // Procesar el formulario
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Crear conexión
-                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-
-                // Verificar conexión
-                if ($conexion->connect_error) {
-                    die("Error de conexión: " . $conexion->connect_error);
-                }
+                include '../conexion.php';
 
                 // Obtener datos del formulario
                 $id_rol = $_POST['id_rol'];

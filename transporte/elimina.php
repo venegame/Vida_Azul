@@ -15,10 +15,8 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST['id_transporte']) && !empty($_POST['id_transporte'])) {
                 $id_transporte = $_POST['id_transporte'];
-                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                if ($conexion->connect_error) {
-                    die("Conexión fallida: " . $conexion->connect_error);
-                }
+                include '../conexion.php';
+
                 $sql = "DELETE FROM transportes WHERE id_transporte = ?";
                 $stmt = $conexion->prepare($sql);
                 $stmt->bind_param("i", $id_transporte);

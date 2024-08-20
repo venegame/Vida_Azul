@@ -25,10 +25,8 @@
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <select class="form-select" id="id_categoria" name="id_categoria" required>
                         <?php
-                        $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                        if ($conexion->connect_error) {
-                            die("Conexión fallida: " . $conexion->connect_error);
-                        }
+                        include '../conexion.php';
+
                         // Obtener las categorías de la base de datos
                         $result = $conexion->query("SELECT id_categoria, nombre_categoria FROM Categoria");
                         while ($row = $result->fetch_assoc()) {
@@ -68,35 +66,33 @@
             </form>
         </div>
         <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $nombre_experto = $_POST['nombre_experto'];
-                $id_categoria = $_POST['id_categoria'];
-                $quienes_somos = $_POST['quienes_somos'];
-                $historia_expertos = $_POST['historia_expertos'];
-                $url_instagram = $_POST['url_instagram'];
-                $url_x = $_POST['url_x'];
-                $url_youtube = $_POST['url_youtube'];
-                $url_facebook = $_POST['url_facebook'];
-                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                if ($conexion->connect_error) {
-                    die("Conexión fallida: " . $conexion->connect_error);
-                }
-                $sql = "INSERT INTO expertos (nombre_experto, id_categoria, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $conexion->prepare($sql);
-                $stmt->bind_param("ssssssss", $nombre_experto, $id_categoria, $quienes_somos, $historia_expertos, $url_instagram, $url_x, $url_youtube, $url_facebook);
-                if ($stmt->execute()) {
-                    echo "<script>
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nombre_experto = $_POST['nombre_experto'];
+            $id_categoria = $_POST['id_categoria'];
+            $quienes_somos = $_POST['quienes_somos'];
+            $historia_expertos = $_POST['historia_expertos'];
+            $url_instagram = $_POST['url_instagram'];
+            $url_x = $_POST['url_x'];
+            $url_youtube = $_POST['url_youtube'];
+            $url_facebook = $_POST['url_facebook'];
+            include '../conexion.php';
+
+            $sql = "INSERT INTO expertos (nombre_experto, id_categoria, quienes_somos, historia_expertos, url_instagram, url_x, url_youtube, url_facebook) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("ssssssss", $nombre_experto, $id_categoria, $quienes_somos, $historia_expertos, $url_instagram, $url_x, $url_youtube, $url_facebook);
+            if ($stmt->execute()) {
+                echo "<script>
                             window.addEventListener('load', function() {
                                 var myModal = new bootstrap.Modal(document.getElementById('successModal'));
                                 myModal.show();
                             });
                           </script>";
-                } else {
-                    echo "Error ingresando registro: " . $stmt->error;
-                }
-                $stmt->close();
-                $conexion->close();
+            } else {
+                echo "Error ingresando registro: " . $stmt->error;
             }
+            $stmt->close();
+            $conexion->close();
+        }
         ?>
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -127,7 +123,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             fetch('../navbar_cruds.php')
                 .then(response => response.text())
@@ -138,4 +134,5 @@
         });
     </script>
 </body>
+
 </html>

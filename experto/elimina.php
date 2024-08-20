@@ -16,10 +16,8 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST['id_experto']) && !empty($_POST['id_experto'])) {
                 $id_experto = $_POST['id_experto'];
-                $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
-                if ($conexion->connect_error) {
-                    die("Conexión fallida: " . $conexion->connect_error);
-                }
+                include '../conexion.php';
+
                 $sql = "DELETE FROM expertos WHERE id_experto = ?";
                 $stmt = $conexion->prepare($sql);
                 $stmt->bind_param("i", $id_experto);

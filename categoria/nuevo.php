@@ -21,13 +21,8 @@
 
             <?php
             // Configura tus datos de conexión a la base de datos
-            $conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
+            include '../conexion.php';
 
-
-            // Verificar la conexión
-            if ($conn->connect_error) {
-                die("La conexión falló: " . $conn->connect_error);
-            }
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Obtener los datos del formulario
@@ -39,21 +34,21 @@
                     echo '<div class="alert alert-warning" role="alert">Por favor, complete todos los campos.</div>';
                 } else {
                     // Escapar los datos para evitar SQL Injection
-                    $id_categoria = $conn->real_escape_string($id_categoria);
-                    $nombre_categoria = $conn->real_escape_string($nombre_categoria);
+                    $id_categoria = $conexion->real_escape_string($id_categoria);
+                    $nombre_categoria = $conexion->real_escape_string($nombre_categoria);
 
                     // Insertar datos en la base de datos
                     $sql = "INSERT INTO categoria (id_categoria, nombre_categoria) VALUES ('$id_categoria', '$nombre_categoria')";
 
-                    if ($conn->query($sql) === TRUE) {
+                    if ($conexion->query($sql) === TRUE) {
                         echo '<div class="alert alert-success" role="alert">Categoría agregada con éxito.</div>';
                     } else {
-                        echo '<div class="alert alert-danger" role="alert">Error: ' . $conn->error . '</div>';
+                        echo '<div class="alert alert-danger" role="alert">Error: ' . $conexion->error . '</div>';
                     }
                 }
             }
 
-            $conn->close();
+            $conexion->close();
             ?>
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="row g-3" method="post" autocomplete="off">

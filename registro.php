@@ -12,11 +12,19 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <div id="navbar-placeholder"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand py-3" href=""><strong>Vida Azul</strong></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                </ul>
+            </div>
+        </div>
+    </nav> 
 
     <?php
     // Crear conexión
-    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul","3307");
+    $conexion = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
     // Verificar conexión
     if ($conexion->connect_error) {
@@ -97,7 +105,7 @@
             <div class="col-md-3">
                 <div class="row py-2 justify-content-center">
                     <div class="col-md-12 py-3">
-                        <a href="/index.php" class="btn btn-primary" style="background-color: #32746D; border: none">
+                        <a href="iniciarsesion.php" class="btn btn-primary" style="background-color: #32746D; border: none">
                             <i class="fas fa-arrow-left" style="background-color: #32746D"></i> Regresar
                         </a>
                     </div>
@@ -129,7 +137,6 @@
                                 <label for="contrasenia" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" name="contrasenia" required />
                             </div>
-
                             <a class="dropdown-item col text-center p-2" href="iniciarsesion.php">Inicia Sesión</a>
                         </div>
                         <div class="card-footer text-center">
@@ -144,7 +151,7 @@
 
         </div>
     </section>
-
+    <div class="p-4"> </div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
         <div class="container ">

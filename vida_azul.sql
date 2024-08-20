@@ -27,6 +27,7 @@ INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`) VALUES
 (8, 'Articulo'),
 (9, 'Curso');
 
+DROP DATABASE `vida_azul`;
 DROP TABLE IF EXISTS `comentario`;
 CREATE TABLE `comentario` (
   `id_comentario` int(11) NOT NULL,

@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $base_url = dirname($_SERVER['REQUEST_URI']);
 
-                 // Redirigir según el rol
-                 if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
+                // Redirigir según el rol
+                if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
                     header("Location: " . $base_url . "/proyecto/listado.php");
                 } else {
                     header("Location: " . $base_url . "/index.php");
@@ -80,7 +80,15 @@ $conexion->close();
 </head>
 
 <body>
-    <div id="navbar-placeholder"></div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand py-3" href=""><strong>Vida Azul</strong></a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+            </ul>
+        </div>
+    </div>
+</nav> 
 
     <section style="overflow-x: hidden;">
         <div class="row py-2 justify-content-center align-items-center">
@@ -99,14 +107,6 @@ $conexion->close();
             </div>
 
             <div class="col-md-3">
-                <div class="row py-2 justify-content-center">
-                    <div class="col-md-12 py-4">
-                        <a href="/proyecto/Vida_Azul/index.php" class="btn btn-primary"
-                            style="background-color: #32746D; border: none">
-                            <i class="fas fa-arrow-left" style="background-color: #32746D"></i> Regresar
-                        </a>
-                    </div>
-                </div>
                 <div class="row py-2 justify-content-center">
                     <div class="col-md-12 py-4">
                         <?php if ($mensaje): ?>
@@ -145,7 +145,7 @@ $conexion->close();
             </div>
         </div>
     </section>
-
+    <div class="p-4"> </div>
     <footer class="footer" style="background-color:#217C61;position: fixed; bottom: 0;width: 100%;"
         class="col text-center text-white mt-auto p-1">
         <div class="container ">
@@ -165,5 +165,4 @@ $conexion->close();
         });
     </script>
 </body>
-
 </html>

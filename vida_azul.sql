@@ -117,24 +117,9 @@ CREATE TABLE `proyecto_imagenes` (
 
 INSERT INTO `proyecto_imagenes` (`id_imagen`, `id_proyecto`, `ruta_imagen`) VALUES
 (1, 1, 'https://media.istockphoto.com/id/1467367215/es/foto/una-imagen-de-una-amplia-sala-de-clases.jpg?s=1024x1024&w=is&k=20&c=HkbWrfY-O9PhIH3D9vymNAW1Y8nxdTCz1qZ2ZCVSpGQ='),
-(2, 1, 'https://img.freepik.com/foto-gratis/hombre-trabajador-campo-junto-paneles-solares_1303-15597.jpg'),
-(3, 1, 'https://img.freepik.com/foto-gratis/panel-energia-solar-fotovoltaica-campo-verde-limpio-concepto-energia-alternativa-ai-generativo_123827-23424.jpg'),
-(4, 1, 'https://media.istockphoto.com/id/1127245421/es/foto/manos-de-mujer-pidiendo-la-bendici%C3%B3n-de-dios-sobre-fondo-puesta-de-sol.jpg?s=1024x1024&w=is&k=20&c=rckoeBloyLTsIHQabNQRzxtgKAzZrakd4IIlKDU3nRw='),
-(5, 1, 'https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?q=80&w=1637&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
 (6, 2, 'https://media.istockphoto.com/id/986900214/es/foto/voluntarios-limpieza-parque.jpg?s=612x612&w=0&k=20&c=LfTUF9GKMGVSw45Swxv0-MwWQskY2xYkUJ8Gfazhuwg='),
-(7, 2, 'https://media.istockphoto.com/id/1326024656/es/foto/foto-de-un-adolescente-irreconocible-recogiendo-basura-de-un-campo-en-un-campamento-de-verano.jpg?s=612x612&w=0&k=20&c=Q6QNMZVMUvbKYX5W5PKM3oTyIaRZ8Z2h-UmelDWxCx4='),
-(8, 2, 'https://media.istockphoto.com/id/127825115/es/foto/limpieza-de-la-camada-sobre-hierba.jpg?s=612x612&w=0&k=20&c=kj0NTU3wxV2eHSIalxgn5ny-1qb0gNCoDYgsNn0TB8o='),
-(9, 2, 'https://media.istockphoto.com/id/1273367579/es/foto/alegre-hombre-de-carrera-mixto-mirando-hacia-otro-lado-mientras-recoge-basura-con-amigos-al.jpg?s=612x612&w=0&k=20&c=sJ7MkUCcLnyiULwyk8HYG237BD6ezzMfAX8-YwICumE='),
-(10, 2, 'https://media.istockphoto.com/id/127825118/es/foto/limpieza-de-la-camada-sobre-hierba.jpg?s=612x612&w=0&k=20&c=d-UMBBkUAno_LY_kJk77c_ExD37tPxiQHxESNprgRyk='),
-(11, 4, 'https://images.unsplash.com/photo-1598335624134-5bceb5de202d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-(12, 4, 'https://media.istockphoto.com/id/1032034626/es/foto/plantando-el-futuro.webp?s=612x612&w=0&k=20&c=T9oN2sfMCwEKiomFpEtVGqm28JNtBbjwPS4V2jQqS9o='),
-(13, 4, 'https://media.istockphoto.com/id/1333182719/es/foto/voluntarios-siguiendo-las-pautas-de-covid-19.webp?s=612x612&w=0&k=20&c=VhEhCcEXFZvSgEU1LgURb60Ye7WPjLm-uuDWLWMT2D4='),
-(14, 4, 'https://media.istockphoto.com/id/1193732330/es/foto/voluntarios-plantando-un-%C3%A1rbol.webp?s=612x612&w=0&k=20&c=qZDkpm_fIecoxzl47_krhVx1XLzzK95jhKx2-lxyQuY='),
+(7, 3, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRxSLj2FihTtIyOEv0qIfuGhjTWJWn869g_g&s'),
 (15, 4, 'https://media.istockphoto.com/id/1371150277/es/foto/vista-de-alto-%C3%A1ngulo-de-ni%C3%B1o-irreconocible-dibujando-el-planeta-tierra-con-personas.jpg?s=1024x1024&w=is&k=20&c=ukRs4Ll_Ac1LW-YmukUCyAveGGJ_j0NFqZwpsCv1u64='),
-(16, 5, 'https://media.istockphoto.com/id/1340953635/es/foto/dos-mujeres-voluntarias-recogen-residuos-pl%C3%A1sticos-desechados-junto-al-mar.jpg?s=612x612&w=0&k=20&c=-RS-lUujG-wvEy0sd9rYbiIUWJtalucOcVBrkLZLAio='),
-(17, 5, 'https://media.istockphoto.com/id/1366551415/es/foto/una-joven-voluntaria-se-pone-en-cuclillas-y-recoge-basura-en-la-orilla-del-oc%C3%A9ano-limpieza-de.jpg?s=612x612&w=0&k=20&c=QierCFOyPhPB68dt7PG6_CHaqwH7wkbF-WA4yqz8i1M='),
-(18, 5, 'https://media.istockphoto.com/id/1435006260/es/foto/recicladores-hablando-mientras-caminan-por-la-playa.jpg?s=612x612&w=0&k=20&c=wUtPMZiGOasGy71HtexsOIh7Droga8nSAhWFWovzdkM='),
-(19, 5, 'https://media.istockphoto.com/id/1023578222/es/foto/activistas-que-trabajan-juntos-haciendo-una-diferencia.jpg?s=612x612&w=0&k=20&c=o3BbkI53l2B4ntYugnhu873yHbf2ECcL1c76qY1Nef0='),
 (20, 5, 'https://media.istockphoto.com/id/1263087901/es/foto/limpieza-ambiental-una-mujer-playa-koh-lanta-tailandia.jpg?s=612x612&w=0&k=20&c=mVrOKAX7xd_bnNYkaQTQ-PUwRsBd-YTl_jyOgf_tuPs=');
 
 DROP TABLE IF EXISTS `recursos`;

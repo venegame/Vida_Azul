@@ -1,24 +1,30 @@
 <?php
 // Conexión a la base de datos
-$host = "localhost";
-$user = "root"; // Cambiar si es necesario
-$password = ""; // Cambiar si es necesario
-$database = "vida_azul";
+$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
-// Crear conexión
-$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul"
-);
 
 // Verificar conexión
 if ($conn->connect_error) {
     die("La conexión a la base de datos falló: " . $conn->connect_error);
 }
 
-// Obtener proyectos en ejecución
-$proyectosEnEjecucion = $conn->query("SELECT * FROM proyecto WHERE estado_proyecto = 'En Progreso'");
+// Obtener proyectos en ejecución con imagenes
+$queryEjecucion = "
+    SELECT p.id_proyecto, p.nombre_proyecto, pi.ruta_imagen
+    FROM proyecto p
+    LEFT JOIN proyecto_imagenes pi ON p.id_proyecto = pi.id_proyecto
+    WHERE p.estado_proyecto = 'En Progreso'
+";
+$proyectosEnEjecucion = $conn->query($queryEjecucion);
 
-// Obtener proyectos concluidos
-$proyectosConcluidos = $conn->query("SELECT * FROM proyecto WHERE estado_proyecto = 'Completado'");
+// Obtener proyectos concluidos con imagenes
+$queryConcluidos = "
+    SELECT p.id_proyecto, p.nombre_proyecto, pi.ruta_imagen
+    FROM proyecto p
+    LEFT JOIN proyecto_imagenes pi ON p.id_proyecto = pi.id_proyecto
+    WHERE p.estado_proyecto = 'Completado'
+";
+$proyectosConcluidos = $conn->query($queryConcluidos);
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +45,11 @@ $proyectosConcluidos = $conn->query("SELECT * FROM proyecto WHERE estado_proyect
         <div class="projects-grid">
             <?php while($proyecto = $proyectosEnEjecucion->fetch_assoc()): ?>
                 <div class="project-card">
-                    <img src="https://img.freepik.com/foto-gratis/papeles-comerciales-naturaleza-muerta-varias-piezas-mecanismo_23-2149352652.jpg" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
+                    <?php if (!empty($proyecto['ruta_imagen'])): ?>
+                        <img src="<?php echo htmlspecialchars($proyecto['ruta_imagen']); ?>" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
+                    <?php else: ?>
+                        <img src="default-image.jpg" alt="Imagen no disponible">
+                    <?php endif; ?>
                     <div class="card-content">
                         <h3><?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?></h3>
                         <a href="proyectosDetalle.php?id=<?php echo $proyecto['id_proyecto']; ?>" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
@@ -52,7 +62,11 @@ $proyectosConcluidos = $conn->query("SELECT * FROM proyecto WHERE estado_proyect
         <div class="projects-grid">
             <?php while($proyecto = $proyectosConcluidos->fetch_assoc()): ?>
                 <div class="project-card">
-                    <img src="https://blog.infoempleo.com/media/2021/12/TuEmpleo_Voluntariado-ONU-1-881x399.jpg" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
+                    <?php if (!empty($proyecto['ruta_imagen'])): ?>
+                        <img src="<?php echo htmlspecialchars($proyecto['ruta_imagen']); ?>" alt="<?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?>">
+                    <?php else: ?>
+                        <img src="default-image.jpg" alt="Imagen no disponible">
+                    <?php endif; ?>
                     <div class="card-content">
                         <h3><?php echo htmlspecialchars($proyecto['nombre_proyecto']); ?></h3>
                         <a href="proyectosDetalle.php?id=<?php echo $proyecto['id_proyecto']; ?>" class="btn"><i class="bi bi-bookmark-plus"></i> Leer más</a>
@@ -80,7 +94,6 @@ $proyectosConcluidos = $conn->query("SELECT * FROM proyecto WHERE estado_proyect
                 .catch(error => console.error('Error al cargar el navbar:', error));
         });
     </script>
-
 </body>
 </html>
 

@@ -1,9 +1,4 @@
 <?php
-// Conexión a la base de datos
-$host = "localhost";
-$user = "root"; // Cambiar si es necesario
-$password = ""; // Cambiar si es necesario
-$database = "vida_azul";
 
 // Crear conexión
 $conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
@@ -74,7 +69,7 @@ $stmt->close();
             <p><strong>Estado:</strong> <?php echo htmlspecialchars($proyecto['estado_proyecto']); ?></p>
 
             <h3 class="centered">Imágenes</h3>
-            <div class="image-gallery">
+            <div class="image-gallery" style="height: 400px; width: 70%;" >
                 <?php foreach ($imagenes as $imagen): ?>
                     <div class="gallery-item"><img src="<?php echo htmlspecialchars($imagen); ?>" alt="Imagen del proyecto"></div>
                 <?php endforeach; ?>

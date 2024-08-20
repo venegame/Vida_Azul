@@ -1,12 +1,14 @@
 <?php
-// Conexión a la base de datos
-$host = "localhost";
-$user = "root"; // Cambiar si es necesario
-$password = ""; // Cambiar si es necesario
-$database = "vida_azul";
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario está autenticado
+if (!isset($_SESSION['nombre_usuario'])) {
+    header("Location: login.php"); // Redirige al login si el usuario no está autenticado
+    exit();
+}
 
 // Crear conexión
-$conn = new mysqli("localhost", "root", "", "vida_azul");
+$conn = new mysqli("localhost", "vida_azul", "vidaazul", "vida_azul");
 
 // Verificar conexión
 if ($conn->connect_error) {
@@ -14,17 +16,17 @@ if ($conn->connect_error) {
 }
 
 // Inicializar variables para evitar errores de "undefined array key"
-$nombre = '';
+$nombre = $_SESSION['nombre_usuario'];
 $comentario = '';
 
 // Procesar el formulario al enviar
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre']) && isset($_POST['comentario'])) {
-    $nombre = trim($_POST['nombre']);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comentario'])) {
     $comentario = trim($_POST['comentario']);
 
     if ($comentario !== '') {
         $fechaComentario = date('Y-m-d H:i:s');
 
+        // Obtener el id_usuario basado en el nombre
         $stmt = $conn->prepare("SELECT id_usuario FROM usuario WHERE nombre_usuario = ?");
         $stmt->bind_param("s", $nombre);
         $stmt->execute();
@@ -53,23 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre']) && isset($_P
     } else {
         echo "El comentario no puede estar vacío.";
     }
-}
-
-// Procesar la eliminación del comentario
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_comment'])) {
-    $id_comentario = $_POST['id_comentario'];
-
-    $stmt = $conn->prepare("DELETE FROM comentario WHERE id_comentario = ?");
-    $stmt->bind_param("i", $id_comentario);
-
-    if ($stmt->execute()) {
-        header("Location: opiniones.php");
-        exit();
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    $stmt->close();
 }
 
 // Obtener todos los comentarios para mostrar
@@ -131,7 +116,7 @@ $comentarios = $conn->query("SELECT comentario.id_comentario, usuario.nombre_usu
         <form id="commentForm" method="POST" class="my-4">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" readonly>
             </div>
             <div class="mb-3">
                 <label for="comentario" class="form-label">Escribe tu comentario</label>
@@ -151,7 +136,6 @@ $comentarios = $conn->query("SELECT comentario.id_comentario, usuario.nombre_usu
                             <!-- Botón para eliminar comentario -->
                             <form method="POST" style="display: inline;">
                                 <input type="hidden" name="id_comentario" value="<?php echo $row['id_comentario']; ?>">
-                                <button type="submit" name="delete_comment" class="btn bi bi-trash"></button>
                             </form>
                         </div>
                     </div>

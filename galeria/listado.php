@@ -111,12 +111,9 @@
         const eliminaModal = document.getElementById('eliminaModal')
         if (eliminaModal) {
             eliminaModal.addEventListener('show.bs.modal', event => {
-                // Button that triggered the modal
                 const button = event.relatedTarget
-                // Extract info from data-bs-* attributes
                 const id = button.getAttribute('data-bs-id')
 
-                // Update the modal's content.
                 const form = eliminaModal.querySelector('#form-elimina')
                 form.setAttribute('action', 'elimina.php?id=' + id)
             })

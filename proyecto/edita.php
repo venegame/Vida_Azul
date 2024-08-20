@@ -39,7 +39,6 @@
         $stmt->close();
     }
 
-    // Obtener los datos del proyecto si se recibe un id de proyecto por GET
     if (isset($_GET['id'])) {
         $id_proyecto = $_GET['id'];
 

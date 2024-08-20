@@ -40,7 +40,6 @@
         // Encriptar la contraseña
         $contrasenia_hash = password_hash($contrasenia, PASSWORD_BCRYPT);
 
-        // ID del rol de Usuario (asumimos que es 2, ajusta según tu base de datos)
         $id_rol_usuario = 2;
 
         // Verificar si el correo ya está registrado

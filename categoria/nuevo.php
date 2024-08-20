@@ -85,7 +85,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../navbar_cruds.php') // Asegúrate de que este archivo esté en la ubicación correcta
+            fetch('../navbar_cruds.php')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-placeholder').innerHTML = data;

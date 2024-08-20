@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $base_url = dirname($_SERVER['REQUEST_URI']);
 
                 // Redirigir según el rol
-                if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
+                if ($id_rol == 1) { 
                     header("Location: " . $base_url . "/proyecto/listado.php");
                 } else {
                     header("Location: " . $base_url . "/index.php");

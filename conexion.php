@@ -1,8 +1,8 @@
 <?php
 // Configuración de la base de datos
 $host = "localhost";
-$user = "vida_azul"; // Cambiar si es necesario
-$password = "vidaazul"; // Cambiar si es necesario
+$user = "vida_azul";
+$password = "vidaazul";
 $database = "vida_azul";
 
 // Crear conexión

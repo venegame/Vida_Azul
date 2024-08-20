@@ -14,7 +14,6 @@
 <body class="d-flex flex-column h-100">
     <div id="navbar-placeholder"></div>
 
-    <!-- Begin page content -->
     <main class="flex-shrink-0">
         <div class="container">
             <?php

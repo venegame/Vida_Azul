@@ -39,11 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nombre_usuario'] = $nombre_usuario;
                 $_SESSION['id_rol'] = $id_rol;
 
-                // Redirigir según el rol
-                if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
-                    header("Location: /proyecto/Proyecto/Vida_Azul/proyecto/listado.php");
+                $base_url = dirname($_SERVER['REQUEST_URI']);
+
+                 // Redirigir según el rol
+                 if ($id_rol == 1) { // Suponiendo que el rol de Administrador tiene id_rol = 1
+                    header("Location: " . $base_url . "/proyecto/listado.php");
                 } else {
-                    header("Location: /proyecto/Proyecto/Vida_Azul/index.php");
+                    header("Location: " . $base_url . "/index.php");
                 }
                 exit();
             } else {
